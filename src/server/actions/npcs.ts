@@ -1,6 +1,6 @@
 "use server";
 
-import { PlayerCharacter, PlayerCharacterFormValues } from "~/data/typings";
+import { Npc, NpcFormValues } from "~/data/typings";
 import { getServerAuthSession } from "../auth";
 import { db } from "~/server/db";
 import { revalidatePath } from "next/cache";
@@ -10,7 +10,7 @@ export async function list(campaignId: string) {
   if (session?.user == null) {
     return;
   }
-  return await db.playerCharacter.findMany({
+  return await db.npc.findMany({
     where: {
       campaignId: campaignId,
     },
@@ -25,33 +25,33 @@ export async function get(id: string) {
   if (session?.user == null) {
     return;
   }
-  return session == null ? null : getPlayerCharacter(id);
+  return session == null ? null : getNpc(id);
 }
 
-export async function getPlayerCharacter(
+export async function getNpc(
   id: string
 ) {
   if (id == null || id == "") {
     return null;
   }
-  return await db.playerCharacter.findUnique({
+  return await db.npc.findUnique({
     where: {
       id: id
     },
   });
 }
 
-export async function create(campaignId: string, pcValues: PlayerCharacterFormValues) {
-  console.log('Creating PlayerCharacter', pcValues)
-  const playerCharacter = pcValues as PlayerCharacter;
-  playerCharacter.campaignId = campaignId;
+export async function create(campaignId: string, pcValues: NpcFormValues) {
+  console.log('Creating Npc', pcValues)
+  const Npc = pcValues as Npc;
+  Npc.campaignId = campaignId;
   const session = await getServerAuthSession();
   if (session?.user == null) {
     return;
   }
   try {
-    const response = await db.playerCharacter.create({
-      data: playerCharacter,
+    const response = await db.npc.create({
+      data: Npc,
     });
     revalidatePath(`/`);
   } catch (e) {
@@ -60,15 +60,15 @@ export async function create(campaignId: string, pcValues: PlayerCharacterFormVa
   }
 }
 
-export async function edit(id: string, data: PlayerCharacterFormValues) {
-  const editedPc = await editPlayerCharacter(id, data as PlayerCharacter);
-  revalidatePath(`/playercharacters/${editedPc?.response.campaignId}`);
+export async function edit(id: string, data: NpcFormValues) {
+  const editedPc = await editNpc(id, data as Npc);
+  revalidatePath(`/npcs/${editedPc?.response.campaignId}`);
 }
 
-async function editPlayerCharacter(id: string, data: PlayerCharacter) {
+async function editNpc(id: string, data: Npc) {
   try {
     const session = await getServerAuthSession();
-    const response = await db.playerCharacter.update({
+    const response = await db.npc.update({
       where: {
         id: id,
       },
@@ -80,10 +80,10 @@ async function editPlayerCharacter(id: string, data: PlayerCharacter) {
   }
 }
 
-export async function deletePlayerCharacter(id: string) {
+export async function deleteNpc(id: string) {
   try {
     const session = await getServerAuthSession();
-    const response = await db.playerCharacter.delete({
+    const response = await db.npc.delete({
       where: {
         id: id,
       },

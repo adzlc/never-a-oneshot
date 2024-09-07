@@ -54,6 +54,8 @@ model Npc {
     name            String
     description     String?
     allegiance      String?
+    race            String?
+    class           String?
     campaign        Campaign   @relation(fields: [campaignId], references: [id])
     campaignId      String    
 }

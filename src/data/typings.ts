@@ -48,6 +48,19 @@ export const PlayerCharacterInput = z.object({
 });
 export type PlayerCharacterFormValues = z.infer<typeof PlayerCharacterInput>;
 
+export const NpcInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  race: z.string().optional(),
+  class: z.string().optional(),
+  description: z.string().optional(),
+  allegiance: z.string().optional(),
+  campaignId: z.string(),
+});
+export type NpcFormValues = z.infer<typeof NpcInput>;
+
+
 
 export const SimInput = z.object({
   firstName: z.string().min(1, {
@@ -115,4 +128,11 @@ export const CLASSES = [
   'Warlock',
   'Artificer',
   'Wizard',
+]
+
+export const ALLEGIANCES = [
+  'Neutral',
+  'Friendly',
+  'Enemy',
+  'Unknown',
 ]
