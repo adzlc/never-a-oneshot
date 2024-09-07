@@ -36,15 +36,9 @@ export default async function MainLayout({
         </div>
       </div>
       <Separator />
-      <Tabs defaultValue="complete" className="flex-1">
-        <div className="mt-2 ml-2 mr-2 md:ml-5 md:mr-5 md:mt-5 h-full md:ml-10">
-          <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
-            <div className="flex-col space-y-4 md:flex md:order-2">
-              {children}
-            </div>
-          </div>
-        </div>
-      </Tabs>
+      <div className="h-full w-full bg-secondarybackground min-h-[calc(100vh-7rem)]">
+        {children}
+      </div>
     </div>
   );
 }

@@ -34,16 +34,16 @@ const PlayerCharacterForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex grid w-full grid-cols-1 justify-center"
+        className="flex justify-center items-center w-full"
       >
         <input type="hidden" name="id" value={data?.id} />
         <input type="hidden" name="campaignId" value={campaignId} />
-        <div className="items-start justify-center gap-6 rounded-lg md:grid lg:grid-cols-2 xl:grid-cols-4">
-          <div className="col-span-2 grid items-start gap-6 lg:col-span-2">
+        <div className="flex justify-center rounded-lg  w-1/2">
+          <div className="w-full ">
             <DemoContainer>
               <Card>
                 <CardHeader>
-                  <CardTitle>Birth Certificate</CardTitle>
+                  <CardTitle>{data ? `Edit Character ${data.name}` : 'Create Player character'}</CardTitle>
                   <CardDescription>
                     Fill in your Character's birth certificate.
                   </CardDescription>

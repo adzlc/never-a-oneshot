@@ -13,16 +13,12 @@ const PlayerCharacterPage = async ({ params }: PageProps) => {
 
     async function createAction(data: PlayerCharacterFormValues) {
         "use server";
-        await create(data);
+        await create(campaignId, data);
         redirect(`/playercharacters/${campaignId}`);
     }
-    console.log("wtf");
     return (
         <>
-            <h1 className="text-2xl font-bold">Create a Player character</h1>
-            <div>
-                <PlayerCharacterForm campaignId={campaignId} submitAction={createAction} />
-            </div>
+            <PlayerCharacterForm campaignId={campaignId} submitAction={createAction} />
         </>
     );
 };

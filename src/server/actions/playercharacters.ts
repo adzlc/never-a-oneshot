@@ -42,13 +42,14 @@ export async function getPlayerCharacter(
   });
 }
 
-export async function create(pcValues: PlayerCharacterFormValues) {
+export async function create(campaignId: string, pcValues: PlayerCharacterFormValues) {
+  console.log('Creating PlayerCharacter', pcValues)
   const playerCharacter = pcValues as PlayerCharacter;
+  playerCharacter.campaignId = campaignId;
   const session = await getServerAuthSession();
   if (session?.user == null) {
     return;
   }
-
   try {
     const response = await db.playerCharacter.create({
       data: playerCharacter,
@@ -57,5 +58,39 @@ export async function create(pcValues: PlayerCharacterFormValues) {
   } catch (e) {
     console.log(e);
     return null;
+  }
+}
+
+export async function edit(id: string, data: PlayerCharacterFormValues) {
+  const editedPc = await editPlayerCharacter(id, data as PlayerCharacter);
+  revalidatePath(`/playercharacters/${editedPc?.response.campaignId}`);
+}
+
+async function editPlayerCharacter(id: string, data: PlayerCharacter) {
+  try {
+    const session = await getServerAuthSession();
+    const response = await db.playerCharacter.update({
+      where: {
+        id: id,
+      },
+      data: data,
+    });
+    return { response };
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function deletePlayerCharacter(id: string) {
+  try {
+    const session = await getServerAuthSession();
+    const response = await db.playerCharacter.delete({
+      where: {
+        id: id,
+      },
+    });
+    return { response };
+  } catch (e) {
+    console.log(e);
   }
 }
