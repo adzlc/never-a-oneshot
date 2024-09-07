@@ -14,6 +14,7 @@ import { FaPerson } from "react-icons/fa6";
 import { type Campaign } from "~/data/typings";
 import Image from "next/image";
 import React from "react";
+import { UserAccountNav } from "./user-account-nav";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   campaign?: Campaign | undefined | null;
@@ -35,19 +36,10 @@ export function MainNav({
       <Link href="/" legacyBehavior passHref>
         <Image
           src="/logo.png"
-          alt="Neighbourhoods"
+          alt="Never a oneshot"
           width="420"
           height="64"
           className="mr-4 hidden cursor-pointer md:flex"
-        />
-      </Link>
-      <Link href="/" legacyBehavior passHref>
-        <Image
-          src="/mobile_logo.png"
-          alt="Neighbourhoods"
-          width="218"
-          height="36"
-          className="mr-4 cursor-pointer md:hidden"
         />
       </Link>
       <nav className="hidden gap-6 md:justify-start  md:flex">
@@ -98,28 +90,14 @@ export function MainNav({
                       <li className="row-span-3">
                         <a
                           className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/sims/create/${campaign.id}`}
+                          href={`/playercharacters/create/${campaign.id}`}
                         >
                           <FaPerson />
                           <div className="mb-2 mt-4 text-lg font-medium">
-                            Sim
+                            PlayerCharacter
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
-                            Create a sim for your neighbourhood.
-                          </p>
-                        </a>
-                      </li>
-                      <li className="row-span-3">
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/pets/create/${campaign.id}`}
-                        >
-                          <FaCat />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            Pet
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Create a pet for your neighbourhood.
+                            Create a Character for your Campaign.
                           </p>
                         </a>
                       </li>
@@ -144,6 +122,16 @@ export function MainNav({
           </NavigationMenuList>
         </NavigationMenu>
       </nav>
+      <div className="flex justify-end w-full">
+        <div className="ml-auto flex hidden items-center  w-full space-x-2 md:justify-end md:flex">
+          <h1 className="text-2xl font-bold text-sims">
+            {campaign ? campaign?.name : "Campaigns"}
+          </h1>
+          <div>
+            <UserAccountNav user={user} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

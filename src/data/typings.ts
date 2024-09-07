@@ -33,6 +33,22 @@ export const CampaignInput = z.object({
 
 export type CampaignFormValues = z.infer<typeof CampaignInput>;
 
+export const PlayerCharacterInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  race: z.string().min(1, {
+    message: "Race is required.",
+  }),
+  class: z.string().min(1, {
+    message: "Class is required.",
+  }),
+  backstory: z.string().optional(),
+  campaignId: z.string(),
+});
+export type PlayerCharacterFormValues = z.infer<typeof PlayerCharacterInput>;
+
+
 export const SimInput = z.object({
   firstName: z.string().min(1, {
     message: "First name is required.",
@@ -84,3 +100,19 @@ export enum Gender {
 }
 
 export const GENDERS = [Gender.Female, Gender.Male];
+
+export const CLASSES = [
+  'Barbarian',
+  'Bard',
+  'Cleric',
+  'Druid',
+  'Fighter',
+  'Monk',
+  'Paladin',
+  'Ranger',
+  'Rogue',
+  'Sorcerer',
+  'Warlock',
+  'Artificer',
+  'Wizard',
+]
