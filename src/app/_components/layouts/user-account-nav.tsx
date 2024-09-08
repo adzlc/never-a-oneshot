@@ -26,7 +26,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center end-start gap-2 p-2">
-          <div className="flex flex-col space-y-1 leading-none">
+          <div className="text-primary flex flex-col space-y-1 leading-none">
             {user.name && <p className="font-medium">{user.name}</p>}
             {user.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
@@ -37,7 +37,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer text-primary"
           onSelect={async (event) => {
             event.preventDefault()
             await signOut({

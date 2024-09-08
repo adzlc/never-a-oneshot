@@ -116,7 +116,7 @@ export function MainNav({
       </nav>
       <div className="flex justify-end w-full">
         <div className="ml-auto flex hidden items-center  w-full space-x-2 md:justify-end md:flex">
-          <h1 className="text-2xl font-bold text-sims">
+          <h1 className="text-primary text-2xl font-bold text-sims">
             {campaign ? campaign?.name : "Campaigns"}
           </h1>
           <div>
