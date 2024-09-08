@@ -1,6 +1,7 @@
 import { PlayerCharacterFormValues } from "~/data/typings";
-import { edit, get } from "~/server/actions/playercharacters";
+import { deletePlayerCharacter, edit, get } from "~/server/actions/playercharacters";
 import EditPlayerChracter from "./edit-form";
+import { redirect } from "next/navigation";
 interface PageProps {
   params: {
     id: string;
@@ -14,6 +15,11 @@ const PlayerCharacterEditPage = async ({ params }: PageProps) => {
   async function editAction(data: PlayerCharacterFormValues) {
     "use server";
     await edit(id, data);
+  }
+  async function deleteAction(id: string) {
+    "use server";
+    await deletePlayerCharacter(id);
+    redirect(`/playercharacters/${playerCharacter?.campaignId}`);
   }
   if (!playerCharacter) {
     return;

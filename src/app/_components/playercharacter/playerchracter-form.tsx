@@ -9,12 +9,18 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import DeleteDialog from "./delete-dialog";
 
 const PlayerCharacterForm = ({
   campaignId,
   data,
-  submitAction
-}: { campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: PlayerCharacterFormValues) => Promise<void> }) => {
+  submitAction,
+  deleteAction
+}: {
+  campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: PlayerCharacterFormValues) => Promise<void>,
+  deleteAction?: (id: string) => Promise<void>;
+}) => {
   const defaultValues: Partial<PlayerCharacterFormValues> = {
     name: data?.name ?? "",
     race: data?.race ?? "",
@@ -43,7 +49,7 @@ const PlayerCharacterForm = ({
             <DemoContainer>
               <Card>
                 <CardHeader>
-                  <CardTitle>{data ? `Edit Character ${data.name}` : 'Create Player character'}</CardTitle>
+                  <CardTitle className='text-primary'>{data ? `Edit Character ${data.name}` : 'Create Player character'}</CardTitle>
                   <CardDescription>
                     Fill in your Character's birth certificate.
                   </CardDescription>
@@ -115,6 +121,19 @@ const PlayerCharacterForm = ({
                   />
 
                   <div className="mt-6 flex justify-end">
+                    <div className="pr-3 grid gap-6">
+                      <Button className="" type="button" variant="secondary" asChild>
+                        <Link href={`/playercharacters/${campaignId}`}>Back</Link>
+                      </Button>
+                    </div>
+                    {data && deleteAction && (
+                      <div className="pr-3 pt-0 grid gap-6">
+                        <DeleteDialog
+                          data={data}
+                          deleteAction={deleteAction}
+                        />
+                      </div>
+                    )}
                     <Button type="submit">Save</Button>
                   </div>
                 </CardContent>

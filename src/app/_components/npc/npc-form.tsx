@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "./delete-dialog";
+import Link from "next/link";
 
 const NpcForm = ({
   campaignId,
@@ -158,6 +159,11 @@ const NpcForm = ({
                   />
 
                   <div className="mt-6 flex justify-end">
+                    <div className="grid gap-6">
+                      <Button className="" type="button" variant="secondary" asChild>
+                        <Link href={`/npcs/${campaignId}`}>Back</Link>
+                      </Button>
+                    </div>
                     {data && deleteAction && (
                       <div className="p-6 pt-0 grid gap-6">
                         <DeleteDialog

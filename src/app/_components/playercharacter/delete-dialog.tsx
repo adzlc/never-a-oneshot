@@ -12,14 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { DialogClose } from "@/components/ui/dialog";
-import { type Campaign } from "~/data/typings";
+import { type PlayerCharacter } from "~/data/typings";
 
-const CampaignDeleteDialog = ({
+const DeleteDialog = ({
   deleteAction,
-  campaign,
+  data,
 }: {
   deleteAction: (id: string) => Promise<void>;
-  campaign: Campaign;
+  data: PlayerCharacter;
 }) => {
   const [correctName, setCorrectName] = useState(false);
   const [open, setOpen] = useState(false);
@@ -34,22 +34,22 @@ const CampaignDeleteDialog = ({
           </DialogTrigger>
           <DialogContent className="md:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className='text-primary'>Delete {campaign.name}</DialogTitle>
+              <DialogTitle>Delete {data.name}</DialogTitle>
               <DialogDescription>
-                Deleting a Campaign cannot be undone. To delete please
-                enter <b>{campaign.name}</b> below.
+                Deleting a PC cannot be undone. To delete please
+                enter <b>{data.name}</b> below.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Input
-                  placeholder="Enter name of Campaign"
-                  id="delete-heck"
-                  name="delete-check"
+                  placeholder="Enter name of NPC"
+                  id="delete-sim-check"
+                  name="delete-sim-check"
                   className="w-60"
                   onChange={(e) => {
                     const value = e.currentTarget.value;
-                    setCorrectName(value.localeCompare(campaign.name, undefined, { sensitivity: 'accent' }) === 0);
+                    setCorrectName(value.localeCompare(data.name, undefined, { sensitivity: 'accent' }) === 0);
                   }}
                 />
               </div>
@@ -61,8 +61,9 @@ const CampaignDeleteDialog = ({
                   id="deleteButton"
                   type="submit"
                   disabled={!correctName}
-                  onClick={async () => {
-                    await deleteAction(campaign.id);
+                  onClick={async (event) => {
+                    event.preventDefault();
+                    await deleteAction(data.id);
                   }}
                 >
                   Delete
@@ -82,4 +83,4 @@ const CampaignDeleteDialog = ({
   );
 };
 
-export default CampaignDeleteDialog;
+export default DeleteDialog;

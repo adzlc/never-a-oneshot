@@ -27,8 +27,8 @@ export const CampaignInput = z.object({
     message: "Name is required.",
   }),
   description: z.string().optional(),
+  story: z.string().optional(),
   world: z.string().optional(),
-
 });
 
 export type CampaignFormValues = z.infer<typeof CampaignInput>;

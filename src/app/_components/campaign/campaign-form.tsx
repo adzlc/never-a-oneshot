@@ -34,6 +34,7 @@ const CampaignForm = ({
   const defaultValues: Partial<CampaignFormValues> = {
     name: data?.name ?? "",
     description: data?.description ?? "",
+    story: data?.story ?? "",
   };
 
   const form = useForm<CampaignFormValues>({
@@ -57,7 +58,7 @@ const CampaignForm = ({
             <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
               <Card>
                 <CardHeader>
-                  <CardTitle>{data ? `Edit ${data.name}` : "Create Campaign"}</CardTitle>
+                  <CardTitle className='text-primary'>{data ? `Edit ${data.name}` : "Create Campaign"}</CardTitle>
                   {data == null && <CardDescription>Create a new Campaign</CardDescription>}
                 </CardHeader>
                 <CardContent className="grid gap-6">
@@ -91,10 +92,33 @@ const CampaignForm = ({
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        control={form.control}
+                        name="story"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Story</FormLabel>
+                            <FormControl>
+                              <Textarea className="min-h-[400px] "
+                                placeholder="Enter the story"
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
                     </div>
                   </DemoContainer>
-                  <div className="mt-6 flex justify-end gap-6">
-                    <Button type="submit">{data == null ? "Create" : "Save"}</Button>
+                  <div className="mt-6 flex justify-end">
+                    {data && deleteAction && (
+                      <div className="p-6 pt-0 grid gap-6">
+                        <CampaignDeleteDialog
+                          campaign={data}
+                          deleteAction={deleteAction}
+                        />
+                      </div>
+                    )}
+                    <Button type="submit">Save</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -102,14 +126,6 @@ const CampaignForm = ({
           </div>
         </form>
       </Form>
-      {data && deleteAction && (
-        <div className="p-6 pt-0 grid gap-6">
-          <CampaignDeleteDialog
-            neighbourhood={data}
-            deleteAction={deleteAction}
-          />
-        </div>
-      )}
     </>
   );
 };

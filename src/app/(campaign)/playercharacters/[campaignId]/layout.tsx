@@ -10,9 +10,9 @@ export default async function Layout({
 }) {
     return (
         <CampaignMainLayout campaignId={params.campaignId}>
-            <div className="ml-4 mr-4">
+            <CentreLayout>
                 {children}
-            </div>
+            </CentreLayout>
         </CampaignMainLayout>
     );
 }

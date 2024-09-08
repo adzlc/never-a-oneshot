@@ -1,12 +1,8 @@
 import {
-  deleteCampaign,
-  editCampaign,
   get,
 } from "~/server/actions/campaigns";
-import CampaignForm from "@/appcomponents/campaign/campaign-form";
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
-import { type CampaignFormValues } from "~/data/typings";
+import CampaignView from "~/app/_components/campaign/campaign-view";
 
 interface PageProps {
   params: {
@@ -17,22 +13,11 @@ interface PageProps {
 const EditNeighbourhoodPage = async ({ params }: PageProps) => {
   const campaignId = params.id;
 
-  async function deleteAction(id: string) {
-    "use server";
-    await deleteCampaign(id);
-    redirect('/');
-  }
-  async function editAction(data: CampaignFormValues) {
-    "use server";
-    await editCampaign(campaignId, data);
-    redirect("/");
-  }
-
   const campaign = await get(campaignId);
   return (
     <>
-      <Suspense fallback={"Loading neighbourhood"}>
-        <CampaignForm data={campaign} submitAction={editAction} deleteAction={deleteAction} />
+      <Suspense fallback={"Loading campaign"}>
+        {campaign && <CampaignView campaign={campaign} />}
       </Suspense>
     </>
   );

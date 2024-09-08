@@ -48,12 +48,26 @@ export function MainNav({
             {campaign && (
               <>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Visit</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className=" text-primary">Visit</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-6 w-[500px] grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          href={`/campaign/${campaign.id}`}
+                        >
+                          <FaHome />
+                          <div className="mb-2 mt-4 text-lg font-medium">
+                            {campaign.name}
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            {`View the ${campaign.name}`}
+                          </p>
+                        </a>
+                      </li>
+                      <li className="row-span-3">
+                        <a
+                          className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                           href={`/playercharacters/${campaign.id}`}
                         >
                           <FaPerson />
@@ -67,7 +81,7 @@ export function MainNav({
                       </li>
                       <li className="row-span-2">
                         <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                           href={`/npcs/${campaign.id}`}
                         >
                           <FaPerson />
@@ -82,45 +96,9 @@ export function MainNav({
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Create</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-3 p-6 w-[500px] grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/playercharacters/create/${campaign.id}`}
-                        >
-                          <FaPerson />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            PlayerCharacter
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Create a Character for your Campaign.
-                          </p>
-                        </a>
-                      </li>
-                      <li className="row-span-3">
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/npcs/create/${campaign.id}`}
-                        >
-                          <FaPerson />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            NPC
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Create an NPC for your Campaign.
-                          </p>
-                        </a>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link
-                    href={`/campaign/${campaign.id}`}
+                    href={`/campaign/edit/${campaign.id}`}
                     legacyBehavior
                     passHref
                   >
