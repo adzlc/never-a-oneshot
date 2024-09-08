@@ -29,7 +29,7 @@ const DeleteDialog = ({
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <div className="flex justify-end">
-              <Button variant="destructive">Delete</Button>
+              <Button type="button" variant="destructive">Delete</Button>
             </div>
           </DialogTrigger>
           <DialogContent className="md:max-w-[425px]">
@@ -43,7 +43,7 @@ const DeleteDialog = ({
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Input
-                  placeholder="Enter name of Neighbourhood"
+                  placeholder="Enter name of NPC"
                   id="delete-sim-check"
                   name="delete-sim-check"
                   className="w-60"
@@ -61,7 +61,8 @@ const DeleteDialog = ({
                   id="deleteButton"
                   type="submit"
                   disabled={!correctName}
-                  onClick={async () => {
+                  onClick={async (event) => {
+                    event.preventDefault();
                     await deleteAction(npc.id);
                   }}
                 >

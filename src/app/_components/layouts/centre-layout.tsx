@@ -4,7 +4,7 @@ export default async function CentreLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-center items-center mt-4 w-full">
+    <div className="mx-auto flex min-w-0 max-w-7xl grow flex-col sm:flex-row sm:py-6">
       {children}
     </div>
   );

@@ -6,6 +6,9 @@ export default {
 	content: ["./src/**/*.tsx"],
 	theme: {
 		extend: {
+			lineClamp: {
+				10: '10',
+			},
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans]
 			},

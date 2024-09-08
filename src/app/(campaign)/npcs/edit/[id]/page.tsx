@@ -3,6 +3,7 @@ import { deleteNpc, edit, get } from "~/server/actions/npcs";
 import EditForm from "./edit-form";
 import DeleteDialog from "../../../../_components/npc/delete-dialog";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 interface PageProps {
   params: {
     id: string;
@@ -12,6 +13,7 @@ interface PageProps {
 const EditPage = async ({ params }: PageProps) => {
   const id = params.id;
   const npc = await get(id);
+  const campaignId = npc?.campaignId;
 
   async function editAction(data: NpcFormValues) {
     "use server";
@@ -21,7 +23,7 @@ const EditPage = async ({ params }: PageProps) => {
   async function deleteAction(id: string) {
     "use server";
     await deleteNpc(id);
-    redirect('/');
+    redirect(`/npcs/${npc?.campaignId}`);
   }
 
   if (!npc) {

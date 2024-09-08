@@ -136,7 +136,7 @@ const NpcForm = ({
                       <FormItem>
                         <FormLabel>Backstory</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Fill in the NPC's information" {...field} />
+                          <Textarea className="min-h-[200px]" placeholder="Fill in the NPC's information" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
