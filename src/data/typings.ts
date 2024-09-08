@@ -56,56 +56,10 @@ export const NpcInput = z.object({
   class: z.string().optional(),
   description: z.string().optional(),
   allegiance: z.string().optional(),
+  faction: z.string().optional(),
   campaignId: z.string(),
 });
 export type NpcFormValues = z.infer<typeof NpcInput>;
-
-
-
-export const SimInput = z.object({
-  firstName: z.string().min(1, {
-    message: "First name is required.",
-  }),
-  lastName: z.string().min(1, {
-    message: "Last name is required.",
-  }),
-  gender: z.string().min(1, {
-    message: "Gender is required.",
-  }),
-  race: z.string().min(1, {
-    message: "Race is required.",
-  }),
-  orientation: z.string().optional(),
-  lifestage: z.string().min(1, {
-    message: "Age is required.",
-  }),
-  aspiration: z.string().optional(),
-  secondAspiration: z.string().optional(),
-  maritalStatus: z.string().optional(),
-  career: z.string().optional(),
-  zodiac: z.string().optional(),
-  hobby: z.string().optional(),
-  subHobby: z.string().optional(),
-  lifetimeWish: z.string().optional(),
-  isDead: z.boolean().default(false),
-  deathReason: z.string().optional(),
-  notes: z.string().optional(),
-  partnerId: z.string().optional(),
-  neighbourhoodId: z.string(),
-  turnOn: z.string().optional(),
-  secondTurnOn: z.string().optional(),
-  turnOff: z.string().optional(),
-  eyeColour: z.string().min(1, {
-    message: "Eye colour is required.",
-  }),
-  hairColour: z.string().min(1, {
-    message: "Hair colour is required.",
-  }),
-  parentId: z.string().optional(),
-  parent2Id: z.string().optional(),
-});
-
-export type SimFormValues = z.infer<typeof SimInput>;
 
 export enum Gender {
   Male = "Male",

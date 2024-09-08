@@ -22,8 +22,9 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
                   {npc.name}
                 </div>
               </CardTitle>
-              {(npc.race || npc.class) && (
-                <CardDescription className="mt-3">
+              {(npc.race || npc.class || npc.faction) && (
+                <CardDescription>
+                  <div className="mb-1">{npc.faction}</div>
                   {npc.race && <RingContent>{npc.race}</RingContent>}
                   {npc.class && <RingContent variant="neutral" className='ml-3'>{npc.class}</RingContent>}
                   {npc.allegiance && <RingContent className='ml-3'>{npc.allegiance}</RingContent>}
@@ -32,7 +33,7 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
               }
             </CardHeader>
             <CardContent>
-              <p className="max-w-full overflow-hidden line-clamp-10">{npc.description}</p>
+              <p className="max-w-full overflow-hidden line-clamp-8">{npc.description}</p>
             </CardContent>
           </Card>
         </Link>
@@ -40,4 +41,5 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
     </>
   );
 };
+
 export default NpcCard;

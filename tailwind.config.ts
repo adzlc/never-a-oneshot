@@ -7,7 +7,7 @@ export default {
 	theme: {
 		extend: {
 			lineClamp: {
-				10: '10',
+				8: '8',
 			},
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans]

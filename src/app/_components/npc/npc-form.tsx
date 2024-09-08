@@ -26,6 +26,7 @@ const NpcForm = ({
     class: data?.class ?? "",
     description: data?.description ?? "",
     allegiance: data?.allegiance ?? "",
+    faction: data?.faction ?? "",
     campaignId: data?.campaignId ?? ""
   };
   const form = useForm<NpcFormValues>({
@@ -125,6 +126,19 @@ const NpcForm = ({
                             ))}
                           </SelectContent>
                         </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="faction"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Faction</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Faction for the character" {...field} />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
