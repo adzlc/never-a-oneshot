@@ -58,6 +58,7 @@ export const NpcInput = z.object({
   allegiance: z.string().optional(),
   faction: z.string().optional(),
   campaignId: z.string(),
+  imageUrl: z.string().optional(),
 });
 export type NpcFormValues = z.infer<typeof NpcInput>;
 

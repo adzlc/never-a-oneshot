@@ -7,7 +7,7 @@ const PlayerCharacterList = async ({ campaignId }: { campaignId: string }) => {
     <>
       <div className="flex flex-wrap justify-center mt-10">
         {data && (data.map((playerCharacter) =>
-          <PlayerCharacterCard npc={playerCharacter} />
+          <PlayerCharacterCard key={playerCharacter.id} npc={playerCharacter} />
         )
         )}
       </div>

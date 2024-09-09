@@ -11,7 +11,7 @@ const NpcList = async ({ campaignId }: { campaignId: string }) => {
   return (
     <div className="flex flex-wrap justify-center mt-10">
       {data && (data.map((npc) =>
-        <NpcCard npc={npc} />
+        <NpcCard key={npc.id} npc={npc} />
       )
       )}
     </div>

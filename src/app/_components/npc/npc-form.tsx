@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "./delete-dialog";
 import Link from "next/link";
+import { UploadButton } from "~/utils/uploadthing";
+import { useState } from "react";
 
 const NpcForm = ({
   campaignId,
@@ -28,16 +30,20 @@ const NpcForm = ({
     description: data?.description ?? "",
     allegiance: data?.allegiance ?? "",
     faction: data?.faction ?? "",
-    campaignId: data?.campaignId ?? ""
+    campaignId: data?.campaignId ?? "",
+    imageUrl: data?.imageUrl ?? ""
   };
   const form = useForm<NpcFormValues>({
     resolver: zodResolver(NpcInput),
     defaultValues,
   });
-
   async function onSubmit(data: NpcFormValues) {
+    data.imageUrl = imageUrl;
     await submitAction(data);
   }
+
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   return (
     <Form {...form}>
       <form
@@ -159,6 +165,22 @@ const NpcForm = ({
                   />
 
                   <div className="mt-6 flex justify-end">
+                    <div className="grid gap-6 pr-3">
+                      <UploadButton
+                        className="text-primary"
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          const fileUrl = res[0]?.appUrl;
+                          if (fileUrl) {
+                            setImageUrl(fileUrl);
+                          }
+                        }}
+                        onUploadError={(error: Error) => {
+                          // Do something with the error.
+                          alert(`ERROR! ${error.message}`);
+                        }}
+                      />
+                    </div>
                     <div className="grid gap-6">
                       <Button className="" type="button" variant="secondary" asChild>
                         <Link href={`/npcs/${campaignId}`}>Back</Link>

@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 import { HiUserGroup } from "react-icons/hi2";
 import RingContent from "~/app/_components/ui/ring-content";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 const NpcCard = async ({ npc }: { npc: Npc }) => {
 
@@ -17,7 +18,10 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
               <CardTitle>
                 <div className="flex items-center mb-3 text-priamry">
                   <div className=" mr-3">
-                    <HiUserGroup />
+                    <Avatar>
+                      <AvatarImage src={npc?.imageUrl ?? ""} />
+                      <AvatarFallback><HiUserGroup /></AvatarFallback>
+                    </Avatar>
                   </div>
                   {npc.name}
                 </div>

@@ -42,7 +42,6 @@ export async function getNpc(
 }
 
 export async function create(campaignId: string, pcValues: NpcFormValues) {
-  console.log('Creating Npc', pcValues)
   const Npc = pcValues as Npc;
   Npc.campaignId = campaignId;
   const session = await getServerAuthSession();

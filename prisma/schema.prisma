@@ -18,6 +18,9 @@ model Campaign {
     world           World?
     players         PlayerCharacter[]
     npcs            Npc[]
+    quests          Quest[]
+    sessions        CampaignSession[]
+    items           CampaignItem[]
 
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
@@ -58,10 +61,44 @@ model Npc {
     race            String?
     class           String?
     faction         String?
+    quests          Quest[]
     campaign        Campaign   @relation(fields: [campaignId], references: [id])
-    campaignId      String    
+    campaignId      String
+    imageUrl        String?
 }
 
+model CampaignSession {
+    id  String      @id @default(cuid())
+    name            String
+    overview        String?
+    campaign        Campaign   @relation(fields: [campaignId], references: [id])
+    campaignId      String
+
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    @@index([name])
+}
+
+model Quest {
+    id  String      @id @default(cuid())
+    name            String
+    description     String?
+    complete        Boolean @default(false)
+    goldReward      Int?
+    rewards         String?
+    campaign        Campaign   @relation(fields: [campaignId], references: [id])
+    campaignId      String    
+    questGiver      Npc   @relation(fields: [questGiverId], references: [id])
+    questGiverId    String
+}
+
+model CampaignItem {
+    id  String      @id @default(cuid())
+    name            String
+    description     String?
+    campaign        Campaign   @relation(fields: [campaignId], references: [id])
+    campaignId      String       
+}
 
 
 // Necessary for Next auth
