@@ -93,6 +93,20 @@ export function MainNav({
                           </p>
                         </a>
                       </li>
+                      <li className="row-span-2">
+                        <a
+                          className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          href={`/campaignsessions/${campaign.id}`}
+                        >
+                          <FaPerson />
+                          <div className="mb-2 mt-4 text-lg font-medium">
+                            Campaign Sessions
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            {`View the ${campaign.name}'s sessions.`}
+                          </p>
+                        </a>
+                      </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>

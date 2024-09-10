@@ -71,6 +71,7 @@ model CampaignSession {
     id  String      @id @default(cuid())
     name            String
     overview        String?
+    sessionDate     DateTime @default(now())
     campaign        Campaign   @relation(fields: [campaignId], references: [id])
     campaignId      String
 

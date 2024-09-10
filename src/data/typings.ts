@@ -5,16 +5,18 @@ import {
   type World as WorldPrisma,
   type PlayerCharacter as PlayerCharacterPrisma,
   type Npc as NpcPrisma,
+  type CampaignSession as CampaignSessionPrisma
 } from "@prisma/client";
 
 /**
  * Export the Prisma types to our own type.
+ * This means if we replace prisma, we only have to change this file.
  */
 export type Campaign = CampaignPrisma;
 export type World = WorldPrisma;
 export type PlayerCharacter = PlayerCharacterPrisma;
 export type Npc = NpcPrisma;
-
+export type CampaignSession = CampaignSessionPrisma;
 
 
 export type CampaignAll = Prisma.CampaignGetPayload<{
@@ -61,6 +63,15 @@ export const NpcInput = z.object({
   imageUrl: z.string().optional(),
 });
 export type NpcFormValues = z.infer<typeof NpcInput>;
+
+export const CampaignSessionInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  overview: z.string().optional(),
+  sessionDate: z.date().optional(),
+});
+export type CampaignSessionFormValues = z.infer<typeof CampaignSessionInput>;
 
 export enum Gender {
   Male = "Male",

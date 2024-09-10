@@ -1,9 +1,7 @@
 import { NpcFormValues } from "~/data/typings";
 import { deleteNpc, edit, get } from "~/server/actions/npcs";
 import EditForm from "./edit-form";
-import DeleteDialog from "../../../../_components/npc/delete-dialog";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 interface PageProps {
   params: {
     id: string;
