@@ -1,6 +1,6 @@
 import { CampaignSessionFormValues } from "~/data/typings";
 import { deletecampaignSession, edit, get } from "~/server/actions/campaignsessions";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import CampaignSessionForm from "~/app/_components/campaignsession/campaignsession-form";
 interface PageProps {
   params: {
@@ -26,7 +26,7 @@ const EditPage = async ({ params }: PageProps) => {
   }
 
   if (!campaignSession) {
-    return;
+    return notFound();
   }
   return (
     <>

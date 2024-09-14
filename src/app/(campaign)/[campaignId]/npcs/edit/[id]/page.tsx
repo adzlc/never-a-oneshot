@@ -1,6 +1,6 @@
 import { NpcFormValues } from "~/data/typings";
 import { deleteNpc, edit, get } from "~/server/actions/npcs";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import NpcForm from "~/app/_components/npc/npc-form";
 import { toast } from "~/hooks/use-toast";
 interface PageProps {
@@ -27,7 +27,7 @@ const EditPage = async ({ params }: PageProps) => {
   }
 
   if (!npc) {
-    return;
+    return notFound();
   }
   return (
     <>

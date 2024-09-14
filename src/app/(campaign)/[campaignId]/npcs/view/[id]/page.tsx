@@ -1,6 +1,7 @@
 
 import { get } from "~/server/actions/npcs";
 import NpcView from "~/app/_components/npc/npc-view";
+import { notFound } from "next/navigation";
 interface PageProps {
   params: {
     id: string;
@@ -11,7 +12,7 @@ const EditPage = async ({ params }: PageProps) => {
   const npc = await get(params.id);
 
   if (!npc) {
-    return <></>;
+    return notFound();
   }
   return (
     <>

@@ -1,7 +1,7 @@
 import { PlayerCharacterFormValues } from "~/data/typings";
 import { deletePlayerCharacter, edit, get } from "~/server/actions/playercharacters";
 import PlayerCharacterForm from "@/appcomponents/playercharacter/playerchracter-form";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 interface PageProps {
   params: {
     id: string;
@@ -24,7 +24,7 @@ const PlayerCharacterEditPage = async ({ params }: PageProps) => {
     redirect(`/${campaignId}/playercharacters`);
   }
   if (!playerCharacter) {
-    return;
+    return notFound();
   }
   return (
     <>

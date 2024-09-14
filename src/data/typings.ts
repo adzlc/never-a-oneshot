@@ -5,7 +5,9 @@ import {
   type World as WorldPrisma,
   type PlayerCharacter as PlayerCharacterPrisma,
   type Npc as NpcPrisma,
-  type CampaignSession as CampaignSessionPrisma
+  type CampaignSession as CampaignSessionPrisma,
+  type CampaignItem as CampaignItemPrisma,
+  type Quest as QuestPrisma,
 } from "@prisma/client";
 
 /**
@@ -17,6 +19,8 @@ export type World = WorldPrisma;
 export type PlayerCharacter = PlayerCharacterPrisma;
 export type Npc = NpcPrisma;
 export type CampaignSession = CampaignSessionPrisma;
+export type CampaignItem = CampaignItemPrisma;
+export type Quest = QuestPrisma;
 
 
 export type CampaignAll = Prisma.CampaignGetPayload<{
@@ -72,6 +76,16 @@ export const CampaignSessionInput = z.object({
   sessionDate: z.date().optional(),
 });
 export type CampaignSessionFormValues = z.infer<typeof CampaignSessionInput>;
+
+
+export const CampaignItemInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  campaignId: z.string(),
+  description: z.string().optional(),
+});
+export type CampaignItemFormValues = z.infer<typeof CampaignItemInput>;
 
 export enum Gender {
   Male = "Male",

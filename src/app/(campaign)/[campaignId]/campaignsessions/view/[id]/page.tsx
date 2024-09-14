@@ -1,5 +1,6 @@
 
 
+import { notFound } from "next/navigation";
 import CampaignSessionView from "~/app/_components/campaignsession/campaignsession-view";
 import { get } from "~/server/actions/campaignsessions";
 interface PageProps {
@@ -11,7 +12,7 @@ interface PageProps {
 const ViewPage = async ({ params }: PageProps) => {
   const campaignSession = await get(params.id);
   if (!campaignSession) {
-    return <></>;
+    return notFound();
   }
   return (
     <>
