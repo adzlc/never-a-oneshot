@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import CampaignSessionList from "../../../_components/campaignsession/campaignsession-list";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import CampaignSessionList from "~/app/_components/campaignsession/campaignsession-list";
 
 interface PageProps {
   params: {
@@ -25,7 +25,7 @@ const CampaignSessionsListPage = async ({ params }: PageProps) => {
             </div>
           </div>
         </div>
-        <Suspense fallback={<Skeleton />}>
+        <Suspense fallback={<Skeleton className="w-full h-96 rounded-xl" />}>
           <CampaignSessionList campaignId={campaignId} />
         </Suspense >
       </div>

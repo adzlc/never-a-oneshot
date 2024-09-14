@@ -87,11 +87,25 @@ export const CampaignItemInput = z.object({
 });
 export type CampaignItemFormValues = z.infer<typeof CampaignItemInput>;
 
+export const QuestInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  campaignId: z.string(),
+  description: z.string().optional(),
+  complete: z.boolean().optional(),
+  goldReward: z.coerce.number().min(0).optional(),
+  rewards: z.string().optional(),
+  questGiverId: z.string().optional(),
+});
+export type QuestFormValues = z.infer<typeof QuestInput>;
+
+// Constants.
+
 export enum Gender {
   Male = "Male",
   Female = "Female",
 }
-
 export const GENDERS = [Gender.Female, Gender.Male];
 
 export const CLASSES = [

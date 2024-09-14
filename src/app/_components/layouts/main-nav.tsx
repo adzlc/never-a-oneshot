@@ -6,8 +6,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { FaHome } from "react-icons/fa";
-import { FaPerson } from "react-icons/fa6";
+import { FaCalendar, FaExclamation, FaHome } from "react-icons/fa";
+import { FaBagShopping, FaPerson, FaUserGroup } from "react-icons/fa6";
 import { type Campaign } from "~/data/typings";
 import React from "react";
 import { Menu, MenuDescription, MenuItem, MenuLink, MenuTitle } from "./menu-item";
@@ -52,23 +52,30 @@ export function MainNav({
                   </MenuItem>
                   <MenuItem>
                     <MenuLink href={`/${campaign.id}/npcs`}>
-                      <FaPerson />
+                      <FaUserGroup />
                       <MenuTitle>Campaign NPCs</MenuTitle>
                       <MenuDescription>{`View the ${campaign.name}'s NPCs`}</MenuDescription>
                     </MenuLink>
                   </MenuItem>
                   <MenuItem>
                     <MenuLink href={`/${campaign.id}/campaignsessions`}>
-                      <FaPerson />
+                      <FaCalendar />
                       <MenuTitle>Campaign Sessions</MenuTitle>
                       <MenuDescription>{`View the ${campaign.name}'s sessions`}</MenuDescription>
                     </MenuLink>
                   </MenuItem>
                   <MenuItem>
                     <MenuLink href={`/${campaign.id}/campaignitems`}>
-                      <FaPerson />
+                      <FaBagShopping />
                       <MenuTitle>Campaign Items</MenuTitle>
                       <MenuDescription>{`View the ${campaign.name}'s items`}</MenuDescription>
+                    </MenuLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <MenuLink href={`/${campaign.id}/quests`}>
+                      <FaExclamation />
+                      <MenuTitle>Quests</MenuTitle>
+                      <MenuDescription>{`View the ${campaign.name}'s quests`}</MenuDescription>
                     </MenuLink>
                   </MenuItem>
                 </Menu>

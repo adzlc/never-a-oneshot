@@ -89,8 +89,8 @@ model Quest {
     rewards         String?
     campaign        Campaign   @relation(fields: [campaignId], references: [id])
     campaignId      String    
-    questGiver      Npc   @relation(fields: [questGiverId], references: [id])
-    questGiverId    String
+    questGiver      Npc?   @relation(fields: [questGiverId], references: [id])
+    questGiverId    String?
 }
 
 model CampaignItem {

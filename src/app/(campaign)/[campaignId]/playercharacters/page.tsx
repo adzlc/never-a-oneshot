@@ -25,7 +25,7 @@ const PlayerCharacterListPage = async ({ params }: PageProps) => {
             </div>
           </div>
         </div>
-        <Suspense fallback={<Skeleton />}>
+        <Suspense fallback={<Skeleton className="w-full h-96 rounded-xl" />}>
           <PlayerCharacterList campaignId={params.campaignId} />
         </Suspense>
       </div>
