@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+ * Base primary: #5584AC
+*/
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --secondary-background: 0 0% 98%;
     --foreground: 0 0% 3.9%;
-    --skeleton: 208, 34%, 50%;
+    --skeleton: 209, 35%, 86%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;

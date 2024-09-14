@@ -8,9 +8,9 @@ const CampaignSessionList = async ({ campaignId }: { campaignId: string }) => {
 
   return (
     <div className="flex flex-wrap justify-center mt-10">
-      {data && (data.map((campaignSession) =>
+      {data && (data.map((campaignSession, index) =>
         <Link key={campaignSession.id} href={`/${campaignId}/campaignsessions/view/${campaignSession.id}`}>
-          <CampaignSessionCard key={campaignSession.id} campaignSession={campaignSession} />
+          <CampaignSessionCard key={campaignSession.id} index={index + 1} campaignSession={campaignSession} />
         </Link>
       )
       )}
