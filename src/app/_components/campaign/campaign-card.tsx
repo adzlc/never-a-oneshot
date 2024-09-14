@@ -20,7 +20,7 @@ const CampaignCard = ({
             <div className="flex items-center justify-between space-y-2">
               <CardTitle>{campaign.name}</CardTitle>
               <div className="flex items-center space-x-2">
-                <Button onClick={() => router.push(`/campaign/edit/${campaign.id}`)}>
+                <Button onClick={() => router.push(`/${campaign.id}/edit`)}>
                   Edit
                 </Button>
               </div>

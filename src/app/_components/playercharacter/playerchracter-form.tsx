@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import DeleteDialog from "./delete-dialog";
+import { useRouter } from "next/navigation";
 
 const PlayerCharacterForm = ({
   campaignId,
@@ -18,9 +19,11 @@ const PlayerCharacterForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: PlayerCharacterFormValues) => Promise<void>,
+  campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: PlayerCharacterFormValues) => Promise<string>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
+  const router = useRouter();
+
   const defaultValues: Partial<PlayerCharacterFormValues> = {
     name: data?.name ?? "",
     race: data?.race ?? "",
@@ -35,6 +38,7 @@ const PlayerCharacterForm = ({
 
   async function onSubmit(data: PlayerCharacterFormValues) {
     await submitAction(data);
+    router.push(`/${campaignId}/playercharacters`)
   }
   return (
     <Form {...form}>
@@ -123,7 +127,7 @@ const PlayerCharacterForm = ({
                   <div className="mt-6 flex justify-end">
                     <div className="pr-3 grid gap-6">
                       <Button className="" type="button" variant="secondary" asChild>
-                        <Link href={`/playercharacters/${campaignId}`}>Back</Link>
+                        <Link href={`/${campaignId}/playercharacters`}>Back</Link>
                       </Button>
                     </div>
                     {data && deleteAction && (

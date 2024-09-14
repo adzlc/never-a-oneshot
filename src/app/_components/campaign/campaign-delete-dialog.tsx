@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { DialogClose } from "@/components/ui/dialog";
 import { type Campaign } from "~/data/typings";
+import { toast } from "~/hooks/use-toast";
 
 const CampaignDeleteDialog = ({
   deleteAction,
@@ -63,6 +64,7 @@ const CampaignDeleteDialog = ({
                   disabled={!correctName}
                   onClick={async () => {
                     await deleteAction(campaign.id);
+                    toast({ description: `${campaign.name} successfully deleted` })
                   }}
                 >
                   Delete

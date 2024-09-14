@@ -13,6 +13,7 @@ import DeleteDialog from "./delete-dialog";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const NpcForm = ({
   campaignId,
@@ -20,9 +21,10 @@ const NpcForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: Npc | null | undefined, submitAction: (data: NpcFormValues) => Promise<void>,
+  campaignId: string, data?: Npc | null | undefined, submitAction: (data: NpcFormValues) => Promise<string>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
+  const router = useRouter();
   const defaultValues: Partial<NpcFormValues> = {
     name: data?.name ?? "",
     race: data?.race ?? "",
@@ -38,8 +40,11 @@ const NpcForm = ({
     defaultValues,
   });
   async function onSubmit(data: NpcFormValues) {
-    data.imageUrl = imageUrl;
-    await submitAction(data);
+    if (imageUrl !== undefined && imageUrl !== "") {
+      data.imageUrl = imageUrl;
+    }
+    const id = await submitAction(data);
+    router.push(`/${campaignId}/npcs/view/${id}`)
   }
 
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -183,7 +188,7 @@ const NpcForm = ({
                     </div>
                     <div className="grid gap-6">
                       <Button className="" type="button" variant="secondary" asChild>
-                        <Link href={`/npcs/${campaignId}`}>Back</Link>
+                        <Link href={`/${campaignId}/npcs`}>Back</Link>
                       </Button>
                     </div>
                     {data && deleteAction && (

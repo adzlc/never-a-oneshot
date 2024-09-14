@@ -7,7 +7,7 @@ function Skeleton({
   console.log("Showing skeleton")
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-skeleton", className)}
+      className={cn("animate-pulse rounded-md bg-primary", className)}
       {...props}
     />
   )

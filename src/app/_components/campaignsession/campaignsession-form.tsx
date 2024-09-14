@@ -9,13 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "~/components/ui/calendar";
 import DeleteDialog from "./delete-dialog";
+import { useRouter } from "next/navigation";
+import RichEditor from "~/components/ui/rich-text/rich-editor";
 
 const CampaignSessionForm = ({
   campaignId,
@@ -23,9 +24,10 @@ const CampaignSessionForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: CampaignSession | null | undefined, submitAction: (data: CampaignSessionFormValues) => Promise<void>,
+  campaignId: string, data?: CampaignSession | null | undefined, submitAction: (data: CampaignSessionFormValues) => Promise<string>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
+  const router = useRouter();
   const defaultValues: Partial<CampaignSessionFormValues> = {
     name: data?.name ?? "",
     overview: data?.overview ?? "",
@@ -36,10 +38,9 @@ const CampaignSessionForm = ({
     defaultValues,
   });
   async function onSubmit(data: CampaignSessionFormValues) {
-    await submitAction(data);
+    const id = await submitAction(data);
+    router.push(`/${campaignId}/campaignsessions`)
   }
-
-  const [imageUrl, setImageUrl] = useState<string>("");
 
   return (
     <Form {...form}>
@@ -117,7 +118,7 @@ const CampaignSessionForm = ({
                       <FormItem>
                         <FormLabel>Overview</FormLabel>
                         <FormControl>
-                          <Textarea style={{ "height": "650px" }} placeholder="Fill in the session overview" {...field} />
+                          <RichEditor className="h-[650px]" content={field.value ?? ""} onChange={field.onChange} placeholder="Fill in the session overview" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -125,13 +126,13 @@ const CampaignSessionForm = ({
                   />
 
                   <div className="mt-6 flex justify-end">
-                    <div className="grid gap-6">
+                    <div className="grid gap-6 mr-3">
                       <Button className="" type="button" variant="secondary" asChild>
-                        <Link href={`/npcs/${campaignId}`}>Back</Link>
+                        <Link href={`/${campaignId}/campaignsessions`}>Back</Link>
                       </Button>
                     </div>
                     {data && deleteAction && (
-                      <div className="p-6 pt-0 grid gap-6">
+                      <div className="p-6 pt-0 grid gap-6 mr-3">
                         <DeleteDialog
                           campaignSession={data}
                           deleteAction={deleteAction}

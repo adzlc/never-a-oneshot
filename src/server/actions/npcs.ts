@@ -38,45 +38,56 @@ export async function getNpc(
     where: {
       id: id
     },
+    include: {
+      campaign: true
+    }
   });
 }
 
-export async function create(campaignId: string, pcValues: NpcFormValues) {
+export async function create(campaignId: string, pcValues: NpcFormValues): Promise<string> {
   const Npc = pcValues as Npc;
   Npc.campaignId = campaignId;
   const session = await getServerAuthSession();
   if (session?.user == null) {
-    return;
+    return "";
   }
   try {
     const response = await db.npc.create({
       data: Npc,
     });
     revalidatePath(`/`);
+    return response.id;
   } catch (e) {
     console.log(e);
-    return null;
+    return "";
   }
 }
 
-export async function edit(id: string, data: NpcFormValues) {
-  const editedPc = await editNpc(id, data as Npc);
-  revalidatePath(`/npcs/${editedPc?.response.campaignId}`);
+export async function edit(id: string, data: NpcFormValues): Promise<string> {
+  await editNpc(id, data as Npc);
+  revalidatePath(`/npcs/[campaignId]`);
+  return id;
 }
 
 async function editNpc(id: string, data: Npc) {
   try {
     const session = await getServerAuthSession();
-    const response = await db.npc.update({
+    if (session?.user == null) {
+      return;
+    }
+    await db.npc.update({
       where: {
         id: id,
       },
       data: data,
+      include: {
+        campaign: true
+      }
     });
-    return { response };
   } catch (e) {
     console.log(e);
   }
+  return id;
 }
 
 export async function deleteNpc(id: string) {

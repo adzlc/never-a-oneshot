@@ -41,28 +41,30 @@ export async function getPlayerCharacter(
   });
 }
 
-export async function create(campaignId: string, pcValues: PlayerCharacterFormValues) {
+export async function create(campaignId: string, pcValues: PlayerCharacterFormValues): Promise<string> {
   console.log('Creating PlayerCharacter', pcValues)
   const playerCharacter = pcValues as PlayerCharacter;
   playerCharacter.campaignId = campaignId;
   const session = await getServerAuthSession();
   if (session?.user == null) {
-    return;
+    return "";
   }
   try {
     const response = await db.playerCharacter.create({
       data: playerCharacter,
     });
     revalidatePath(`/`);
+    return response.id;
   } catch (e) {
     console.log(e);
-    return null;
+    return "";
   }
 }
 
-export async function edit(id: string, data: PlayerCharacterFormValues) {
+export async function edit(id: string, data: PlayerCharacterFormValues): Promise<string> {
   const editedPc = await editPlayerCharacter(id, data as PlayerCharacter);
-  revalidatePath(`/playercharacters/${editedPc?.response.campaignId}`);
+  revalidatePath(`/${editedPc?.campaignId}/playercharacters`);
+  return editedPc?.id ?? "";
 }
 
 async function editPlayerCharacter(id: string, data: PlayerCharacter) {
@@ -74,7 +76,7 @@ async function editPlayerCharacter(id: string, data: PlayerCharacter) {
       },
       data: data,
     });
-    return { response };
+    return response;
   } catch (e) {
     console.log(e);
   }

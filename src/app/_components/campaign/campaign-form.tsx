@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import CampaignDeleteDialog from "./campaign-delete-dialog";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 const CampaignForm = ({
@@ -29,10 +30,11 @@ const CampaignForm = ({
   deleteAction,
   data,
 }: {
-  submitAction: (data: CampaignFormValues) => Promise<void>;
+  submitAction: (data: CampaignFormValues) => Promise<string>;
   deleteAction?: (id: string) => Promise<void>;
   data?: Campaign | null | undefined;
 }) => {
+  const router = useRouter();
   const defaultValues: Partial<CampaignFormValues> = {
     name: data?.name ?? "",
     description: data?.description ?? "",
@@ -45,7 +47,8 @@ const CampaignForm = ({
   });
 
   async function onSubmit(data: CampaignFormValues) {
-    await submitAction(data);
+    const id = await submitAction(data);
+    router.push(`/${id}`)
   }
 
   return (
@@ -113,7 +116,7 @@ const CampaignForm = ({
                       <>
                         <div className="grid gap-6">
                           <Button className="" type="button" variant="secondary" asChild>
-                            <Link href={`/campaign/${data.id}`}>Back</Link>
+                            <Link href={`/${data.id}`}>Back</Link>
                           </Button>
                         </div>
                         {deleteAction && (

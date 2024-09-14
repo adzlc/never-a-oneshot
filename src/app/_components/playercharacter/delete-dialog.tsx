@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { DialogClose } from "@/components/ui/dialog";
 import { type PlayerCharacter } from "~/data/typings";
+import { toast } from "~/hooks/use-toast";
 
 const DeleteDialog = ({
   deleteAction,
@@ -64,6 +65,7 @@ const DeleteDialog = ({
                   onClick={async (event) => {
                     event.preventDefault();
                     await deleteAction(data.id);
+                    toast({ description: `${data.name} successfully deleted` })
                   }}
                 >
                   Delete

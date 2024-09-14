@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { DialogClose } from "@/components/ui/dialog";
 import { type Npc } from "~/data/typings";
+import { toast } from "~/hooks/use-toast";
 
 const DeleteDialog = ({
   deleteAction,
@@ -64,6 +65,7 @@ const DeleteDialog = ({
                   onClick={async (event) => {
                     event.preventDefault();
                     await deleteAction(npc.id);
+                    toast({ description: `${npc.name} successfully deleted` })
                   }}
                 >
                   Delete

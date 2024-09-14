@@ -43,11 +43,12 @@ export async function getCampaign(
   });
 }
 
-export async function create(campaign: CampaignFormValues) {
+export async function create(campaign: CampaignFormValues): Promise<string> {
   const response = await createCampaign(campaign as Campaign);
   if (response) {
-    revalidatePath(`/`);
+    revalidatePath('/');
   }
+  return response ? response.id : "";
 }
 
 export async function createCampaign(campaign: Campaign) {
@@ -72,6 +73,7 @@ export async function editCampaign(
   data: CampaignFormValues,
 ) {
   await updateCampaign(id, data as Campaign);
+  return id;
 }
 
 export async function updateCampaign(
@@ -87,10 +89,9 @@ export async function updateCampaign(
       },
       data: campaign,
     });
-    return { response };
+    revalidatePath('/');
   } catch (e) {
     console.log(e);
-    return null;
   }
 }
 

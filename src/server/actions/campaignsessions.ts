@@ -44,10 +44,11 @@ export async function create(campaignId: string, values: CampaignSessionFormValu
     return;
   }
   try {
-    await db.campaignSession.create({
+    const response = await db.campaignSession.create({
       data: cs,
     });
     revalidatePath(`/`);
+    return response.id;
   } catch (e) {
     console.log(e);
     return null;
@@ -66,8 +67,8 @@ export async function edit(id: string, data: CampaignSessionFormValues) {
       },
       data: data,
     });
-    revalidatePath(`/campaignsessions/${response.campaignId}`);
-    return { response };
+    revalidatePath(`/${response.campaignId}/campaignsessions`);
+    return response.id;
   } catch (e) {
     console.log(e);
     return null;

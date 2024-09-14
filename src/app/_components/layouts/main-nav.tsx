@@ -1,20 +1,15 @@
 "use client";
-import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { FaCat, FaHome } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { type Campaign } from "~/data/typings";
-import Image from "next/image";
 import React from "react";
-import { UserAccountNav } from "./user-account-nav";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   campaign?: Campaign | undefined | null;
@@ -44,7 +39,7 @@ export function MainNav({
                     <li className="row-span-3">
                       <a
                         className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href={`/campaign/${campaign.id}`}
+                        href={`/${campaign.id}`}
                       >
                         <FaHome />
                         <div className="mb-2 mt-4 text-lg font-medium">
@@ -58,7 +53,7 @@ export function MainNav({
                     <li className="row-span-3">
                       <a
                         className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href={`/playercharacters/${campaign.id}`}
+                        href={`/${campaign.id}/playercharacters`}
                       >
                         <FaPerson />
                         <div className="mb-2 mt-4 text-lg font-medium">
@@ -72,7 +67,7 @@ export function MainNav({
                     <li className="row-span-2">
                       <a
                         className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href={`/npcs/${campaign.id}`}
+                        href={`/${campaign.id}/npcs`}
                       >
                         <FaPerson />
                         <div className="mb-2 mt-4 text-lg font-medium">
@@ -86,7 +81,7 @@ export function MainNav({
                     <li className="row-span-2">
                       <a
                         className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href={`/campaignsessions/${campaign.id}`}
+                        href={`/${campaign.id}/campaignsessions`}
                       >
                         <FaPerson />
                         <div className="mb-2 mt-4 text-lg font-medium">
