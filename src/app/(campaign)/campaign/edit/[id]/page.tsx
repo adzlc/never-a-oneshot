@@ -25,7 +25,7 @@ const EditNeighbourhoodPage = async ({ params }: PageProps) => {
   async function editAction(data: CampaignFormValues) {
     "use server";
     await editCampaign(campaignId, data);
-    redirect("/");
+    redirect(`/campaign/${campaignId}`);
   }
 
   const campaign = await get(campaignId);

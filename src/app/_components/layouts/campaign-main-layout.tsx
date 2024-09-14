@@ -11,13 +11,8 @@ export default async function CampaignMainLayout({
   children: React.ReactNode;
   campaignId: string;
 }) {
-  const campaign = await get(campaignId);
 
   return (
-    <Suspense fallback={<Skeleton />}>
-      {campaign && (
-        <MainLayout children={children} campaign={campaign} />
-      )}
-    </Suspense>
+    <MainLayout children={children} campaignId={campaignId} />
   );
 }

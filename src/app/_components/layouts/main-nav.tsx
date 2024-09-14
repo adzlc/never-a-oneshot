@@ -33,111 +33,78 @@ export function MainNav({
 }: SidebarProps) {
   return (
     <>
-      <Link href="/" legacyBehavior passHref>
-        <Image
-          src="/logo.png"
-          alt="Never a oneshot"
-          width="420"
-          height="64"
-          className="mr-4 hidden cursor-pointer md:flex"
-        />
-      </Link>
-      <nav className="hidden gap-6 md:justify-start  md:flex">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {campaign && (
-              <>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className=" text-primary">Visit</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-3 p-6 w-[500px] grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <a
-                          className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/campaign/${campaign.id}`}
-                        >
-                          <FaHome />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            {campaign.name}
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            {`View the ${campaign.name}`}
-                          </p>
-                        </a>
-                      </li>
-                      <li className="row-span-3">
-                        <a
-                          className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/playercharacters/${campaign.id}`}
-                        >
-                          <FaPerson />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            Player Characters
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            {`View the ${campaign.name}'s Player's Characters.`}
-                          </p>
-                        </a>
-                      </li>
-                      <li className="row-span-2">
-                        <a
-                          className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/npcs/${campaign.id}`}
-                        >
-                          <FaPerson />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            NPCs
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            {`View the ${campaign.name}'s NPCs.`}
-                          </p>
-                        </a>
-                      </li>
-                      <li className="row-span-2">
-                        <a
-                          className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href={`/campaignsessions/${campaign.id}`}
-                        >
-                          <FaPerson />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            Campaign Sessions
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            {`View the ${campaign.name}'s sessions.`}
-                          </p>
-                        </a>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link
-                    href={`/campaign/edit/${campaign.id}`}
-                    legacyBehavior
-                    passHref
-                  >
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Edit Campaign
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </>
-            )}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </nav>
-      <div className="flex justify-end w-full">
-        <div className="ml-auto flex hidden items-center  w-full space-x-2 md:justify-end md:flex">
-          <h1 className="text-primary text-2xl font-bold text-sims">
-            {campaign ? campaign?.name : "Campaigns"}
-          </h1>
-          <div>
-            <UserAccountNav user={user} />
-          </div>
-        </div>
-      </div>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {campaign && (
+            <>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className=" text-primary">Visit</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-6 w-[500px] grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <a
+                        className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href={`/campaign/${campaign.id}`}
+                      >
+                        <FaHome />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          {campaign.name}
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          {`View the ${campaign.name}`}
+                        </p>
+                      </a>
+                    </li>
+                    <li className="row-span-3">
+                      <a
+                        className="text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href={`/playercharacters/${campaign.id}`}
+                      >
+                        <FaPerson />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          Player Characters
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          {`View the ${campaign.name}'s Player's Characters.`}
+                        </p>
+                      </a>
+                    </li>
+                    <li className="row-span-2">
+                      <a
+                        className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href={`/npcs/${campaign.id}`}
+                      >
+                        <FaPerson />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          NPCs
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          {`View the ${campaign.name}'s NPCs.`}
+                        </p>
+                      </a>
+                    </li>
+                    <li className="row-span-2">
+                      <a
+                        className="  text-primary flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href={`/campaignsessions/${campaign.id}`}
+                      >
+                        <FaPerson />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          Campaign Sessions
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          {`View the ${campaign.name}'s sessions.`}
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </>
+          )}
+        </NavigationMenuList>
+      </NavigationMenu>
+
     </>
   );
 }

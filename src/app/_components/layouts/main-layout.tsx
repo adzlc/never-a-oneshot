@@ -1,16 +1,20 @@
 import { Separator } from "@/components/ui/separator";
-import { Tabs } from "@/components/ui/tabs";
+import Image from "next/image";
+import Link from "next/link";
 import { MainNav } from "~/app/_components/layouts/main-nav";
-import { type Campaign } from "~/data/typings";
+import { get } from "~/server/actions/campaigns";
 import { getServerAuthSession } from "~/server/auth";
+import { UserAccountNav } from "./user-account-nav";
 
 export default async function MainLayout({
   children,
-  campaign: campaign,
+  campaignId,
 }: {
   children: React.ReactNode;
-  campaign: Campaign | null | undefined;
+  campaignId: string;
 }) {
+  const campaign = await get(campaignId);
+
   const session = await getServerAuthSession();
   const user = {
     name: session?.user.name,
@@ -22,17 +26,33 @@ export default async function MainLayout({
       <div className="border-b sticky top-0 z-50 w-full bg-white">
         <div className="flex h-12 items-center px-4 md:h-24">
           <div className="ml-auto flex w-full space-x-2 md:justify-start">
-            <MainNav
-              campaign={campaign}
-              user={user}
-              className="mx-6"
-            />
+            <Link href="/" legacyBehavior passHref>
+              <Image
+                src="/logo.png"
+                alt="Never a oneshot"
+                width="420"
+                height="64"
+                className="mr-4 hidden cursor-pointer md:flex"
+              />
+            </Link>
+            <nav className="hidden gap-6 md:justify-start  md:flex">
+              <MainNav
+                campaign={campaign}
+                user={user}
+                className="mx-6"
+              />
+            </nav>
+            <div className="flex justify-end w-full">
+              <div className="ml-auto flex hidden items-center  w-full space-x-2 md:justify-end md:flex">
+                <h1 className="text-primary text-2xl font-bold text-sims">
+                  {campaign ? campaign?.name : "Campaigns"}
+                </h1>
+                <div>
+                  <UserAccountNav user={user} />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="ml-5 border-b md:hidden">
-          <h1 className="text-xl font-bold text-sims">
-            {campaign ? campaign?.name : "Campaigns"}
-          </h1>
         </div>
       </div>
       <Separator />

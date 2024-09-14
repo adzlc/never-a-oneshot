@@ -20,6 +20,7 @@ export default withUt({
 			colors: {
 				background: 'hsl(var(--background))',
 				secondarybackground: 'hsl(var(--secondary-background))',
+				skeleton: 'hsl(var(--skeleton))',
 				foreground: 'hsl(var(--foreground))',
 				card: {
 					DEFAULT: 'hsl(var(--card))',

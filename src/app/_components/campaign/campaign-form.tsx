@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import CampaignDeleteDialog from "./campaign-delete-dialog";
+import RichEditor from "~/components/ui/rich-text/rich-editor";
+import Link from "next/link";
 
 
 const CampaignForm = ({
@@ -99,10 +101,7 @@ const CampaignForm = ({
                           <FormItem>
                             <FormLabel>Story</FormLabel>
                             <FormControl>
-                              <Textarea className="min-h-[400px] "
-                                placeholder="Enter the story"
-                                {...field}
-                              />
+                              <RichEditor content={field.value ?? ""} onChange={field.onChange} placeholder="Enter the campaign story" />
                             </FormControl>
                           </FormItem>
                         )}
@@ -110,13 +109,22 @@ const CampaignForm = ({
                     </div>
                   </DemoContainer>
                   <div className="mt-6 flex justify-end">
-                    {data && deleteAction && (
-                      <div className="p-6 pt-0 grid gap-6">
-                        <CampaignDeleteDialog
-                          campaign={data}
-                          deleteAction={deleteAction}
-                        />
-                      </div>
+                    {data && (
+                      <>
+                        <div className="grid gap-6">
+                          <Button className="" type="button" variant="secondary" asChild>
+                            <Link href={`/campaign/${data.id}`}>Back</Link>
+                          </Button>
+                        </div>
+                        {deleteAction && (
+                          <div className="p-6 pt-0 grid gap-6">
+                            <CampaignDeleteDialog
+                              campaign={data}
+                              deleteAction={deleteAction}
+                            />
+                          </div>
+                        )}
+                      </>
                     )}
                     <Button type="submit">Save</Button>
                   </div>
