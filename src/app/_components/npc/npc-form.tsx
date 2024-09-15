@@ -14,6 +14,7 @@ import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import RichEditor from "~/components/ui/rich-text/rich-editor";
 
 const NpcForm = ({
   campaignId,
@@ -162,7 +163,7 @@ const NpcForm = ({
                       <FormItem>
                         <FormLabel>Backstory</FormLabel>
                         <FormControl>
-                          <Textarea className="min-h-[200px]" placeholder="Fill in the NPC's information" {...field} />
+                          <RichEditor className="min-h-[200px]" content={field.value ?? ""} onChange={field.onChange} placeholder="Fill in the NPC's information" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -186,7 +187,7 @@ const NpcForm = ({
                         }}
                       />
                     </div>
-                    <div className="grid gap-6">
+                    <div className="grid gap-6 mr-3">
                       <Button className="" type="button" variant="secondary" asChild>
                         <Link href={`/${campaignId}/npcs`}>Back</Link>
                       </Button>

@@ -1,10 +1,12 @@
+"use client";
 import Link from "next/link";
-import { ALLEGIANCES, Npc } from "~/data/typings";
+import { type Npc } from "~/data/typings";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { HiUserGroup } from "react-icons/hi2";
 import RingContent from "~/app/_components/ui/ring-content";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import RichViewer from "~/components/ui/rich-text/rich-viewer";
 
 const NpcCard = async ({ npc }: { npc: Npc }) => {
 
@@ -37,7 +39,7 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
               }
             </CardHeader>
             <CardContent>
-              <p className="max-w-full overflow-hidden line-clamp-8">{npc.description}</p>
+              <p className="max-w-full overflow-hidden line-clamp-8"><RichViewer key={npc.id} content={npc.description ?? ""} /></p>
             </CardContent>
           </Card>
         </Link>

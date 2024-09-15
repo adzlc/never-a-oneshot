@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import RingContent from "../ui/ring-content";
 import { Button } from "~/components/ui/button";
+import RichViewer from "~/components/ui/rich-text/rich-viewer";
 
 
 const NpcView = ({
@@ -54,7 +55,7 @@ const NpcView = ({
                 </CardDescription>
               )
               }
-              <div className="mt-4">{npc.description}</div>
+              <div className="mt-4"><RichViewer key={npc.id} content={npc.description ?? ""} /></div>
             </div>
           </div>
 
