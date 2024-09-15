@@ -40,7 +40,6 @@ const QuestForm = ({
     defaultValues,
   });
   async function onSubmit(data: QuestFormValues) {
-    console.log("err", data)
     const id = await submitAction(data);
     router.push(`/${campaignId}/quests`)
   }

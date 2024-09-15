@@ -21,6 +21,7 @@ model Campaign {
     quests          Quest[]
     sessions        CampaignSession[]
     items           CampaignItem[]
+    locations       Location[]
 
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
@@ -36,7 +37,20 @@ model World {
     description     String?
     campaign        Campaign   @relation(fields: [campaignId], references: [id])
     campaignId      String  @unique
+    imageUrl        String?
 
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    @@index([name])
+}
+
+model Location {
+    id  String      @id @default(cuid())
+    name            String
+    description     String?
+    campaign        Campaign   @relation(fields: [campaignId], references: [id])
+    campaignId      String  @unique
+    imageUrl        String?
 
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt

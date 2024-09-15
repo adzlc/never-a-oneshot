@@ -78,6 +78,13 @@ export function MainNav({
                       <MenuDescription>{`View the ${campaign.name}'s quests`}</MenuDescription>
                     </MenuLink>
                   </MenuItem>
+                  <MenuItem>
+                    <MenuLink href={`/${campaign.id}/locations`}>
+                      <FaExclamation />
+                      <MenuTitle>Locations</MenuTitle>
+                      <MenuDescription>{`View the ${campaign.name}'s locations`}</MenuDescription>
+                    </MenuLink>
+                  </MenuItem>
                 </Menu>
               </NavigationMenuContent>
             </NavigationMenuItem>

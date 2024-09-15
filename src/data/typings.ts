@@ -8,6 +8,7 @@ import {
   type CampaignSession as CampaignSessionPrisma,
   type CampaignItem as CampaignItemPrisma,
   type Quest as QuestPrisma,
+  type Location as LocationPrisma,
 } from "@prisma/client";
 
 /**
@@ -21,7 +22,7 @@ export type Npc = NpcPrisma;
 export type CampaignSession = CampaignSessionPrisma;
 export type CampaignItem = CampaignItemPrisma;
 export type Quest = QuestPrisma;
-
+export type Location = LocationPrisma;
 
 export type CampaignAll = Prisma.CampaignGetPayload<{
   include: { npcs: true, players: true, world: true };
@@ -99,6 +100,17 @@ export const QuestInput = z.object({
   questGiverId: z.string().optional(),
 });
 export type QuestFormValues = z.infer<typeof QuestInput>;
+
+export const LocationInput = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  campaignId: z.string(),
+  description: z.string().optional(),
+  imageUrl: z.string().optional(),
+});
+
+export type LocationFormValues = z.infer<typeof LocationInput>;
 
 // Constants.
 
