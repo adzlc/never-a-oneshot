@@ -11,6 +11,8 @@ import Link from "next/link";
 import DeleteDialog from "./delete-dialog";
 import { useRouter } from "next/navigation";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
+import { useTransition } from "react";
+import { toast } from "~/hooks/use-toast";
 
 const CampaignItemForm = ({
   campaignId,
@@ -22,6 +24,7 @@ const CampaignItemForm = ({
   deleteAction?: (id: string) => Promise<void>;
 }) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<CampaignItemFormValues> = {
     name: data?.name ?? "",
     description: data?.description ?? "",
@@ -32,9 +35,18 @@ const CampaignItemForm = ({
     defaultValues,
   });
 
-  async function onSubmit(data: FieldValues) {
-    await submitAction(data);
-    router.push(`/${campaignId}/campaignitems`)
+  function onSubmit(data: FieldValues) {
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save campaign item.",
+          variant: "destructive",
+        })
+      }
+    });
   }
 
   return (
@@ -94,7 +106,7 @@ const CampaignItemForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import CampaignItemForm from "~/app/_components/campaignitem/campaignitem-form";
 import { create } from "~/server/actions/campaignitems";
@@ -8,13 +8,14 @@ interface PageProps {
     };
 }
 
-const CampaignSessionPage = async ({ params }: PageProps) => {
+const CampaignItemPage = async ({ params }: PageProps) => {
     const campaignId = params.campaignId;
 
     const submitAction = async (data: FieldValues) => {
         "use server"
         create(campaignId, data);
-        revalidatePath(`/`);
+        // For some reason the redirect must be done here for create, otherwise it throws an error.
+        redirect(`/${campaignId}/campaignitems`);
     }
     return (
         <>
@@ -23,4 +24,4 @@ const CampaignSessionPage = async ({ params }: PageProps) => {
     );
 };
 
-export default CampaignSessionPage;
+export default CampaignItemPage;

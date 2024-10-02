@@ -6,8 +6,13 @@ import { FieldValues } from "react-hook-form";
 import { CampaignItemInput } from "~/data/typings";
 import { api } from "~/trpc/server";
 
+/**
+ * Server actions for CampaignItem.
+ * Must only contain mutations.
+ */
+
 export async function deleteCampaignItem(campaignId: string, id: string) {
-  const response = await api.campaignItems.delete({ id });
+  await api.campaignItems.delete({ id });
   revalidatePath(`/${campaignId}/campaignitems`);
   redirect(`/${campaignId}/campaignitems`);
 }
@@ -18,7 +23,7 @@ export async function create(campaignId: string, values: FieldValues) {
     ...values,
   });
   await api.campaignItems.create(input);
-  revalidatePath(`/${campaignId}/campaignitems`);
+  revalidatePath('/');
 }
 
 export async function edit(id: string, data: FieldValues) {
@@ -27,6 +32,6 @@ export async function edit(id: string, data: FieldValues) {
     ...data,
   });
   const response = await api.campaignItems.edit(input);
-  revalidatePath(`/${response.campaignId}/campaignitems`);
+  revalidatePath('/');
   redirect(`/${response.campaignId}/campaignitems`);
 }
