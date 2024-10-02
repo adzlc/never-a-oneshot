@@ -1,7 +1,8 @@
-import { type CampaignItemFormValues } from "~/data/typings";
-import { deletecampaignItem, edit, get } from "~/server/actions/campaignitems";
 import { notFound, redirect } from "next/navigation";
 import CampaignItemForm from "~/app/_components/campaignitem/campaignitem-form";
+import { api } from "~/trpc/server";
+import { FieldValues } from "react-hook-form";
+import { deleteCampaignItem, edit } from "~/server/actions/campaignitems";
 interface PageProps {
   params: {
     id: string;
@@ -11,23 +12,21 @@ interface PageProps {
 
 const EditPage = async ({ params }: PageProps) => {
   const id = params.id;
-  const campaignItem = await get(id);
+  const campaignItem = await api.campaignItems.get({ id });
+  if (!campaignItem) {
+    return notFound();
+  }
 
-  async function editAction(data: CampaignItemFormValues): Promise<string> {
-    "use server";
-    await edit(id, data);
-    return id;
+  const submitAction = async (data: FieldValues) => {
+    "use server"
+    await edit(id, data)
   }
 
   async function deleteAction(id: string) {
     "use server";
-    await deletecampaignItem(id);
-    redirect(`/${params.campaignId}/campaignitems`);
+    await deleteCampaignItem(params.campaignId, id);
   }
 
-  if (!campaignItem) {
-    return notFound();
-  }
   return (
     <>
       {campaignItem && (
@@ -35,7 +34,7 @@ const EditPage = async ({ params }: PageProps) => {
           <CampaignItemForm
             data={campaignItem}
             campaignId={campaignItem.campaignId}
-            submitAction={editAction}
+            submitAction={submitAction}
             deleteAction={deleteAction}
           />
         </>

@@ -63,8 +63,18 @@ const CampaignForm = ({
             <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
               <Card>
                 <CardHeader>
-                  <CardTitle className='text-primary'>{data ? `Edit ${data.name}` : "Create Campaign"}</CardTitle>
-                  {data == null && <CardDescription>Create a new Campaign</CardDescription>}
+                  <div className="flex-1 space-y-4 pt-6">
+                    <div className="flex items-center justify-between space-y-2">
+                      <CardTitle className='text-primary'>{data ? `Edit ${data.name}` : "Create Campaign"}</CardTitle>
+                      {data == null && <CardDescription>Create a new Campaign</CardDescription>}
+                      {data != null && <div className="flex items-center space-x-2">
+                        <Button type="button" asChild>
+                          <Link href={`/${data.id}`}>Back</Link>
+                        </Button>
+                      </div>
+                      }
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent className="grid gap-6">
                   <DemoContainer>
@@ -115,7 +125,7 @@ const CampaignForm = ({
                     {data && (
                       <>
                         <div className="grid gap-6">
-                          <Button className="" type="button" variant="secondary" asChild>
+                          <Button type="button" variant="secondary" asChild>
                             <Link href={`/${data.id}`}>Back</Link>
                           </Button>
                         </div>

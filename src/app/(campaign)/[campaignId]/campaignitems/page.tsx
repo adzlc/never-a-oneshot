@@ -3,6 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import CampaignItemList from "~/app/_components/campaignitem/campaignitem-list";
+import SkeletonListCard from "~/app/_components/ui/skeleton-list-card";
 
 interface PageProps {
   params: {
@@ -25,7 +26,7 @@ const CampaignItemsListPage = async ({ params }: PageProps) => {
             </div>
           </div>
         </div>
-        <Suspense fallback={<Skeleton className="w-full h-96 rounded-xl" />}>
+        <Suspense fallback={<SkeletonListCard />}>
           <CampaignItemList campaignId={campaignId} />
         </Suspense >
       </div>

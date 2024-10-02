@@ -20,6 +20,7 @@ const RichEditor = ({ className, content, placeholder, onChange, ...props }: Edi
     },
     extensions: [StarterKit],
     content: content,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())
     },
@@ -34,7 +35,7 @@ const RichEditor = ({ className, content, placeholder, onChange, ...props }: Edi
     >
 
       <EditorToolbar editor={editor} />
-      <div className="min-h-[80px]">
+      <div className="min-h-[80px] overflow-auto max-h-[90%]">
         <EditorContent editor={editor} placeholder={placeholder} />
       </div>
     </div>

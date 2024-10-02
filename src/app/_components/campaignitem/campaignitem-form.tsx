@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { CampaignItem, CampaignItemFormValues, CampaignItemInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
@@ -18,7 +18,7 @@ const CampaignItemForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: CampaignItem | null | undefined, submitAction: (data: CampaignItemFormValues) => Promise<string>,
+  campaignId: string, data?: CampaignItem | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
   const router = useRouter();
@@ -31,8 +31,9 @@ const CampaignItemForm = ({
     resolver: zodResolver(CampaignItemInput),
     defaultValues,
   });
-  async function onSubmit(data: CampaignItemFormValues) {
-    const id = await submitAction(data);
+
+  async function onSubmit(data: FieldValues) {
+    await submitAction(data);
     router.push(`/${campaignId}/campaignitems`)
   }
 

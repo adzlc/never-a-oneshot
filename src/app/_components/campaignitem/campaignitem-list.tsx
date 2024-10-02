@@ -1,10 +1,9 @@
-
-import { list } from "~/server/actions/campaignitems";
 import CampaignItemCard from "~/app/_components/campaignitem/campaignitem-card";
 import Link from "next/link";
+import { api } from "~/trpc/server";
 
 const CampaignItemList = async ({ campaignId }: { campaignId: string }) => {
-  const data = await list(campaignId);
+  const data = await api.campaignItems.list({ campaignId });
 
   return (
     <div className="flex flex-wrap justify-center mt-10">

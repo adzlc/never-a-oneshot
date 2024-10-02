@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import CampaignItemView from "~/app/_components/campaignitem/campaignitem-view";
-import { get } from "~/server/actions/campaignitems";
+import { api } from "~/trpc/server";
 interface PageProps {
   params: {
     id: string;
@@ -9,16 +9,15 @@ interface PageProps {
 }
 
 const ViewPage = async ({ params }: PageProps) => {
-  const campaignItem = await get(params.id);
+  const id = params.id;
+  const campaignItem = await api.campaignItems.get({ id });
   if (!campaignItem) {
     return notFound();
   }
   return (
     <>
       {campaignItem && (
-        <>
-          <CampaignItemView key={campaignItem.id} campaignItem={campaignItem} />
-        </>
+        <CampaignItemView key={campaignItem.id} campaignItem={campaignItem} />
       )
       }
     </>

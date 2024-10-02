@@ -17,6 +17,10 @@ export async function list(campaignId: string) {
     },
     orderBy: {
       name: 'asc'
+    },
+    include: {
+      questGiver: true,
+      campaign: true,
     }
   });
 }
@@ -33,6 +37,10 @@ export async function get(id: string) {
     where: {
       id: id
     },
+    include: {
+      questGiver: true,
+      campaign: true,
+    }
   });
 }
 

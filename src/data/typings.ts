@@ -28,6 +28,10 @@ export type CampaignAll = Prisma.CampaignGetPayload<{
   include: { npcs: true, players: true, world: true };
 }>;
 
+export type QuestAll = Prisma.QuestGetPayload<{
+  include: { campaign: true, questGiver: true }
+}>;
+
 
 export const CampaignInput = z.object({
   name: z.string().min(1, {
@@ -80,6 +84,7 @@ export type CampaignSessionFormValues = z.infer<typeof CampaignSessionInput>;
 
 
 export const CampaignItemInput = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, {
     message: "Name is required.",
   }),

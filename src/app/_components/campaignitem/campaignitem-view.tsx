@@ -1,11 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import RichViewer from "~/components/ui/rich-text/rich-viewer";
 import { type CampaignItem } from "~/data/typings";
 
-const CampaignItemView = async ({
+const CampaignItemView = ({
   campaignItem,
 }: {
   campaignItem: CampaignItem;

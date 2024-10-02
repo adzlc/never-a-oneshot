@@ -45,7 +45,7 @@ const NpcForm = ({
       data.imageUrl = imageUrl;
     }
     const id = await submitAction(data);
-    router.push(`/${campaignId}/npcs/view/${id}`)
+    router.push(`/${campaignId}/npcs`)
   }
 
   const [imageUrl, setImageUrl] = useState<string>("");
