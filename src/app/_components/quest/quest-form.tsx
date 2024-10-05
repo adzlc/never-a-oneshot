@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Npc, Quest, QuestFormValues, QuestInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
@@ -14,6 +14,8 @@ import RichEditor from "~/components/ui/rich-text/rich-editor";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Select } from "@radix-ui/react-select";
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
+import { useTransition } from "react";
+import { toast } from "~/hooks/use-toast";
 
 const QuestForm = ({
   campaignId,
@@ -22,10 +24,10 @@ const QuestForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, questGivers?: Npc[], data?: Quest | null | undefined, submitAction: (data: QuestFormValues) => Promise<string>,
+  campaignId: string, questGivers?: Npc[], data?: Quest | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<QuestFormValues> = {
     name: data?.name ?? "",
     description: data?.description ?? "",
@@ -39,9 +41,23 @@ const QuestForm = ({
     resolver: zodResolver(QuestInput),
     defaultValues,
   });
-  async function onSubmit(data: QuestFormValues) {
-    const id = await submitAction(data);
-    router.push(`/${campaignId}/quests`)
+
+  function onSubmit(data: FieldValues) {
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved quest",
+        })
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save quest",
+          variant: "destructive",
+        })
+      }
+    });
   }
 
   return (
@@ -159,7 +175,7 @@ const QuestForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

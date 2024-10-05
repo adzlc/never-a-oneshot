@@ -96,6 +96,7 @@ export const CampaignItemInput = z.object({
 export type CampaignItemFormValues = z.infer<typeof CampaignItemInput>;
 
 export const QuestInput = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, {
     message: "Name is required.",
   }),

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import QuestView from "~/app/_components/quest/quest-view";
-import { get } from "~/server/actions/quests";
+import { api } from "~/trpc/server";
 interface PageProps {
   params: {
     id: string;
@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 const ViewPage = async ({ params }: PageProps) => {
-  const quest = await get(params.id);
+  const quest = await api.quests.get(params.id);
   if (!quest) {
     return notFound();
   }

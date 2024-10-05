@@ -1,6 +1,8 @@
-import { campaignItemsRouter } from "~/server/api/routers/campaignitems";
+
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { campaignSessionsRouter } from "./routers/campaignsessions";
+import { campaignSessionsRouter } from "./routers/campaign-sessions-router";
+import { questsRouter } from "./routers/quests-router";
+import { campaignItemsRouter } from "./routers/campaign-items-router";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +12,7 @@ import { campaignSessionsRouter } from "./routers/campaignsessions";
 export const appRouter = createTRPCRouter({
   campaignItems: campaignItemsRouter,
   campaignSessions: campaignSessionsRouter,
+  quests: questsRouter,
 });
 
 // export type definition of API

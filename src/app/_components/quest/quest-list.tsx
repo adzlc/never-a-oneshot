@@ -1,10 +1,10 @@
 
-import { list } from "~/server/actions/quests";
 import Link from "next/link";
 import QuestCard from "./quest-card";
+import { api } from "~/trpc/server";
 
 const QuestList = async ({ campaignId }: { campaignId: string }) => {
-  const data = await list(campaignId);
+  const data = await api.quests.list(campaignId);
 
   return (
     <div className="flex flex-wrap justify-center mt-10">

@@ -14,7 +14,6 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "~/components/ui/calendar";
 import DeleteDialog from "./delete-dialog";
-import { useRouter } from "next/navigation";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
 import { useTransition } from "react";
 import { toast } from "~/hooks/use-toast";
@@ -154,7 +153,7 @@ const CampaignSessionForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

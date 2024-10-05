@@ -7,7 +7,7 @@ import { api } from "~/trpc/server";
 import { FieldValues } from "react-hook-form";
 
 /**
- * Server actions for CampaignItem.
+ * Server actions for CampaignSession.
  * Must only contain mutations.
  */
 

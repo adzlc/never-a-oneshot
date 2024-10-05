@@ -1,6 +1,6 @@
 import { type QuestAll } from "~/data/typings";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { FaCheckCircle, FaCoins, FaTimesCircle } from "react-icons/fa";
+import { FaCoins } from "react-icons/fa";
 import BooleanView from "../ui/boolean-view";
 import { FaUserGroup } from "react-icons/fa6";
 
