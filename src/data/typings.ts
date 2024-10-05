@@ -110,6 +110,7 @@ export const QuestInput = z.object({
 export type QuestFormValues = z.infer<typeof QuestInput>;
 
 export const LocationInput = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, {
     message: "Name is required.",
   }),

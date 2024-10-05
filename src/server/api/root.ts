@@ -3,6 +3,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { campaignSessionsRouter } from "./routers/campaign-sessions-router";
 import { questsRouter } from "./routers/quests-router";
 import { campaignItemsRouter } from "./routers/campaign-items-router";
+import { locationsRouter } from "./routers/locations-router";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ import { campaignItemsRouter } from "./routers/campaign-items-router";
 export const appRouter = createTRPCRouter({
   campaignItems: campaignItemsRouter,
   campaignSessions: campaignSessionsRouter,
+  locations: locationsRouter,
   quests: questsRouter,
 });
 

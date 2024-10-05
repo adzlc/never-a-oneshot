@@ -1,5 +1,6 @@
+import { redirect } from "next/navigation";
+import { FieldValues } from "react-hook-form";
 import LocationForm from "~/app/_components/location/location-form";
-import { LocationFormValues } from "~/data/typings";
 import { create } from "~/server/actions/location-actions";
 interface PageProps {
     params: {
@@ -10,14 +11,15 @@ interface PageProps {
 const CreatePage = async ({ params }: PageProps) => {
     const campaignId = params.campaignId;
 
-    async function createAction(data: LocationFormValues): Promise<string> {
-        "use server";
-        const id = await create(campaignId, data);
-        return id ?? "";
+    const submitAction = async (data: FieldValues) => {
+        "use server"
+        await create(campaignId, data);
+        // For some reason the redirect must be done here for create, otherwise it throws an error.
+        redirect(`/${campaignId}/locations`);
     }
     return (
         <>
-            <LocationForm campaignId={campaignId} submitAction={createAction} />
+            <LocationForm campaignId={campaignId} submitAction={submitAction} />
         </>
     );
 };

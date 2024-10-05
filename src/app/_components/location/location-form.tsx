@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Npc, Location, LocationFormValues, LocationInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
@@ -12,7 +12,8 @@ import DeleteDialog from "./delete-dialog";
 import { useRouter } from "next/navigation";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
 import { UploadButton } from "~/utils/uploadthing";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { toast } from "~/hooks/use-toast";
 
 const LocationForm = ({
   campaignId,
@@ -21,10 +22,10 @@ const LocationForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, questGivers?: Npc[], data?: Location | null | undefined, submitAction: (data: LocationFormValues) => Promise<string>,
+  campaignId: string, questGivers?: Npc[], data?: Location | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<LocationFormValues> = {
     name: data?.name ?? "",
     description: data?.description ?? "",
@@ -35,12 +36,26 @@ const LocationForm = ({
     resolver: zodResolver(LocationInput),
     defaultValues,
   });
-  async function onSubmit(data: LocationFormValues) {
+
+  function onSubmit(data: FieldValues) {
     if (imageUrl !== undefined && imageUrl !== "") {
       data.imageUrl = imageUrl;
     }
-    const id = await submitAction(data);
-    router.push(`/${campaignId}/locations`)
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved location",
+        })
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save location",
+          variant: "destructive",
+        })
+      }
+    });
   }
 
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -118,7 +133,7 @@ const LocationForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

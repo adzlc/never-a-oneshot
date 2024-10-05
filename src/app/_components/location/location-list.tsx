@@ -1,10 +1,9 @@
-
-import { list } from "~/server/actions/locations";
 import Link from "next/link";
 import LocationCard from "./location-card";
+import { api } from "~/trpc/server";
 
 const LocationList = async ({ campaignId }: { campaignId: string }) => {
-  const data = await list(campaignId);
+  const data = await api.locations.list(campaignId);
 
   return (
     <div className="flex flex-wrap justify-center mt-10">

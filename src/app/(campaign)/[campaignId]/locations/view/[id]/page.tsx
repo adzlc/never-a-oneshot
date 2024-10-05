@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import LocationView from "~/app/_components/location/location-view";
-import { get } from "~/server/actions/locations";
+import { api } from "~/trpc/server";
 
 interface PageProps {
   params: {
@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 const ViewPage = async ({ params }: PageProps) => {
-  const location = await get(params.id);
+  const location = await api.locations.get(params.id);
   if (!location) {
     return notFound();
   }

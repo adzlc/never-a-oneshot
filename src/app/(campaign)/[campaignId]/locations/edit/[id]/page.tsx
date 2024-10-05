@@ -1,7 +1,8 @@
-import { LocationFormValues } from "~/data/typings";
-import { notFound, redirect } from "next/navigation";
-import { deleteLocation, edit, get } from "~/server/actions/location-actions";
+import { notFound } from "next/navigation";
+import { deleteLocation, edit } from "~/server/actions/location-actions";
 import LocationForm from "~/app/_components/location/location-form";
+import { api } from "~/trpc/server";
+import { FieldValues } from "react-hook-form";
 interface PageProps {
   params: {
     id: string;
@@ -11,18 +12,15 @@ interface PageProps {
 
 const EditPage = async ({ params }: PageProps) => {
   const id = params.id;
-  const location = await get(id);
+  const location = await api.locations.get(id);
 
-  async function editAction(data: LocationFormValues): Promise<string> {
-    "use server";
-    await edit(id, data);
-    return id;
+  const submitAction = async (data: FieldValues) => {
+    "use server"
+    await edit(id, data)
   }
-
   async function deleteAction(id: string) {
     "use server";
-    await deleteLocation(id);
-    redirect(`/${params.campaignId}/locations`);
+    await deleteLocation(params.campaignId, id);
   }
 
   if (!location) {
@@ -33,7 +31,7 @@ const EditPage = async ({ params }: PageProps) => {
       <LocationForm
         data={location}
         campaignId={location.campaignId}
-        submitAction={editAction}
+        submitAction={submitAction}
         deleteAction={deleteAction}
       />
     </>
