@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { CLASSES, PlayerCharacter, PlayerCharacterFormValues, PlayerCharacterInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
@@ -11,7 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import DeleteDialog from "./delete-dialog";
-import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { toast } from "~/hooks/use-toast";
 
 const PlayerCharacterForm = ({
   campaignId,
@@ -19,10 +20,10 @@ const PlayerCharacterForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: PlayerCharacterFormValues) => Promise<string>,
+  campaignId: string, data?: PlayerCharacter | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const defaultValues: Partial<PlayerCharacterFormValues> = {
     name: data?.name ?? "",
@@ -35,10 +36,22 @@ const PlayerCharacterForm = ({
     resolver: zodResolver(PlayerCharacterInput),
     defaultValues,
   });
-
-  async function onSubmit(data: PlayerCharacterFormValues) {
-    await submitAction(data);
-    router.push(`/${campaignId}/playercharacters`)
+  function onSubmit(data: FieldValues) {
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved player character",
+        })
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save player character",
+          variant: "destructive",
+        })
+      }
+    });
   }
   return (
     <Form {...form}>
@@ -138,7 +151,7 @@ const PlayerCharacterForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

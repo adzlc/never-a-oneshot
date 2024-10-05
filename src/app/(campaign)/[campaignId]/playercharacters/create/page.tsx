@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
+import { FieldValues } from "react-hook-form";
 import PlayerCharacterForm from "~/app/_components/playercharacter/playerchracter-form";
-import { PlayerCharacterFormValues } from "~/data/typings";
 import { create } from "~/server/actions/player-character-actions";
 interface PageProps {
     params: {
@@ -11,13 +11,16 @@ interface PageProps {
 const PlayerCharacterPage = async ({ params }: PageProps) => {
     const campaignId = params.campaignId;
 
-    async function createAction(data: PlayerCharacterFormValues) {
-        "use server";
-        return await create(campaignId, data);
+    const submitAction = async (data: FieldValues) => {
+        "use server"
+        console.log("Hello", campaignId, data);
+        await create(campaignId, data);
+        // For some reason the redirect must be done here for create, otherwise it throws an error.
+        redirect(`/${campaignId}/playercharacters`);
     }
     return (
         <>
-            <PlayerCharacterForm campaignId={campaignId} submitAction={createAction} />
+            <PlayerCharacterForm campaignId={campaignId} submitAction={submitAction} />
         </>
     );
 };

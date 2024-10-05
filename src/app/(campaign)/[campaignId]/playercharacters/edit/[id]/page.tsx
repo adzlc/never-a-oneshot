@@ -1,7 +1,10 @@
 import { PlayerCharacterFormValues } from "~/data/typings";
-import { deletePlayerCharacter, edit, get } from "~/server/actions/player-character-actions";
 import PlayerCharacterForm from "@/appcomponents/playercharacter/playerchracter-form";
 import { notFound, redirect } from "next/navigation";
+import { api } from "~/trpc/server";
+import { FieldValues } from "react-hook-form";
+import { editCampaign } from "~/server/actions/campaign-actions";
+import { deletePlayerCharacter, edit } from "~/server/actions/player-character-actions";
 interface PageProps {
   params: {
     id: string;
@@ -12,20 +15,20 @@ interface PageProps {
 const PlayerCharacterEditPage = async ({ params }: PageProps) => {
   const id = params.id;
   const campaignId = params.campaignId;
-  const playerCharacter = await get(id);
-
-  async function editAction(data: PlayerCharacterFormValues): Promise<string> {
-    "use server";
-    return await edit(id, data);
-  }
-  async function deleteAction(id: string) {
-    "use server";
-    await deletePlayerCharacter(id);
-    redirect(`/${campaignId}/playercharacters`);
-  }
+  const playerCharacter = await api.playerCharacters.get(id);
   if (!playerCharacter) {
     return notFound();
   }
+
+  const submitAction = async (data: FieldValues) => {
+    "use server"
+    await edit(id, data)
+  }
+  async function deleteAction(id: string) {
+    "use server";
+    await deletePlayerCharacter(params.campaignId, id);
+  }
+
   return (
     <>
       {playerCharacter && (
@@ -34,7 +37,7 @@ const PlayerCharacterEditPage = async ({ params }: PageProps) => {
             key={playerCharacter.id}
             data={playerCharacter}
             campaignId={campaignId}
-            submitAction={editAction}
+            submitAction={submitAction}
             deleteAction={deleteAction}
           />
         </>

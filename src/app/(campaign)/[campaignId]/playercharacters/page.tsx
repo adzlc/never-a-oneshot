@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import PlayerCharacterList from "../../../_components/playercharacter/pc-list";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import PlayerCharacterList from "~/app/_components/playercharacter/pc-list";
 
 interface PageProps {
   params: {

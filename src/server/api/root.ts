@@ -4,6 +4,7 @@ import { campaignSessionsRouter } from "./routers/campaign-sessions-router";
 import { questsRouter } from "./routers/quests-router";
 import { campaignItemsRouter } from "./routers/campaign-items-router";
 import { locationsRouter } from "./routers/locations-router";
+import { playerCharactersRouter } from "./routers/player-characters-router";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   campaignItems: campaignItemsRouter,
   campaignSessions: campaignSessionsRouter,
   locations: locationsRouter,
+  playerCharacters: playerCharactersRouter,
   quests: questsRouter,
 });
 

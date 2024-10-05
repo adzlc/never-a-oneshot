@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { HiUserGroup } from "react-icons/hi2";
 import RingContent from "~/app/_components/ui/ring-content";
 
-const PlayerCharacterCard = async ({ npc: playerCharacter }: { npc: PlayerCharacter }) => {
+const PlayerCharacterCard = ({ npc: playerCharacter }: { npc: PlayerCharacter }) => {
 
   return (
     <>
