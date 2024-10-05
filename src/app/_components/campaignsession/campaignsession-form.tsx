@@ -1,12 +1,11 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { CampaignSession, CampaignSessionFormValues, CampaignSessionInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
@@ -17,6 +16,8 @@ import { Calendar } from "~/components/ui/calendar";
 import DeleteDialog from "./delete-dialog";
 import { useRouter } from "next/navigation";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
+import { useTransition } from "react";
+import { toast } from "~/hooks/use-toast";
 
 const CampaignSessionForm = ({
   campaignId,
@@ -24,22 +25,36 @@ const CampaignSessionForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: CampaignSession | null | undefined, submitAction: (data: CampaignSessionFormValues) => Promise<string>,
+  campaignId: string, data?: CampaignSession | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<CampaignSessionFormValues> = {
     name: data?.name ?? "",
     overview: data?.overview ?? "",
     sessionDate: data?.sessionDate ?? new Date(),
+    campaignId: data?.campaignId ?? campaignId,
   };
   const form = useForm<CampaignSessionFormValues>({
     resolver: zodResolver(CampaignSessionInput),
     defaultValues,
   });
-  async function onSubmit(data: CampaignSessionFormValues) {
-    const id = await submitAction(data);
-    router.push(`/${campaignId}/campaignsessions`)
+  function onSubmit(data: FieldValues) {
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved campaign session",
+        })
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save campaign session.",
+          variant: "destructive",
+        })
+      }
+    });
   }
 
   return (
@@ -139,7 +154,7 @@ const CampaignSessionForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

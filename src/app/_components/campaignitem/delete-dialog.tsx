@@ -44,13 +44,13 @@ const DeleteDialog = ({
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Input
-                  placeholder="Enter name of NPC"
+                  placeholder="Enter name of Campaign Item"
                   id="delete-sim-check"
                   name="delete-sim-check"
                   className="w-60"
                   onChange={(e) => {
-                    const value = e.currentTarget.value;
-                    setCorrectName(value.localeCompare(campaignItem.name, undefined, { sensitivity: 'accent' }) === 0);
+                    const value = e.currentTarget.value.trim();
+                    setCorrectName(value.localeCompare(campaignItem.name.trim(), undefined, { sensitivity: 'accent' }) === 0);
                   }}
                 />
               </div>
@@ -65,7 +65,7 @@ const DeleteDialog = ({
                   onClick={async (event) => {
                     event.preventDefault();
                     await deleteAction(campaignItem.id);
-                    toast({ description: `${campaignItem.name} successfully deleted` })
+                    toast({ title: 'Success', description: `${campaignItem.name} successfully deleted` })
                   }}
                 >
                   Delete

@@ -44,7 +44,7 @@ const DeleteDialog = ({
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Input
-                  placeholder="Enter name of NPC"
+                  placeholder="Enter name of Quest"
                   id="delete-sim-check"
                   name="delete-sim-check"
                   className="w-60"

@@ -23,7 +23,6 @@ const CampaignItemForm = ({
   campaignId: string, data?: CampaignItem | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<CampaignItemFormValues> = {
     name: data?.name ?? "",
@@ -39,6 +38,10 @@ const CampaignItemForm = ({
     startTransition(async () => {
       try {
         await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved campaign item",
+        })
       } catch (err) {
         toast({
           title: "Error",
@@ -106,7 +109,7 @@ const CampaignItemForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

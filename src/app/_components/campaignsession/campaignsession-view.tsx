@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { CampaignSession } from "~/data/typings";
 import { useRouter } from "next/navigation";
 
-const CampaignSessionView = async ({
+const CampaignSessionView = ({
   campaignSession,
 }: {
   campaignSession: CampaignSession;

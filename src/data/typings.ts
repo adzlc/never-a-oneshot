@@ -74,10 +74,12 @@ export const NpcInput = z.object({
 export type NpcFormValues = z.infer<typeof NpcInput>;
 
 export const CampaignSessionInput = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, {
     message: "Name is required.",
   }),
   overview: z.string().optional(),
+  campaignId: z.string(),
   sessionDate: z.date().optional(),
 });
 export type CampaignSessionFormValues = z.infer<typeof CampaignSessionInput>;

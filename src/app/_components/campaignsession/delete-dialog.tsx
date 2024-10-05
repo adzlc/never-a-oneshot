@@ -44,7 +44,7 @@ const DeleteDialog = ({
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
                 <Input
-                  placeholder="Enter name of NPC"
+                  placeholder="Enter name of Campaign Session"
                   id="delete-sim-check"
                   name="delete-sim-check"
                   className="w-60"
@@ -65,7 +65,7 @@ const DeleteDialog = ({
                   onClick={async (event) => {
                     event.preventDefault();
                     await deleteAction(campaignSession.id);
-                    toast({ description: `${campaignSession.name} successfully deleted` })
+                    toast({ title: 'Success', description: `${campaignSession.name} successfully deleted` })
                   }}
                 >
                   Delete

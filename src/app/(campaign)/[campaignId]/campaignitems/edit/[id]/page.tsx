@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import CampaignItemForm from "~/app/_components/campaignitem/campaignitem-form";
 import { api } from "~/trpc/server";
 import { FieldValues } from "react-hook-form";

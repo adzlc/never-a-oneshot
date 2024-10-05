@@ -1,7 +1,8 @@
-import { CampaignSessionFormValues } from "~/data/typings";
-import { deletecampaignSession, edit, get } from "~/server/actions/campaignsessions";
-import { notFound, redirect } from "next/navigation";
+import { deleteCampaignSession, edit } from "~/server/actions/campaignsessions";
+import { notFound } from "next/navigation";
 import CampaignSessionForm from "~/app/_components/campaignsession/campaignsession-form";
+import { api } from "~/trpc/server";
+import { FieldValues } from "react-hook-form";
 interface PageProps {
   params: {
     id: string;
@@ -11,22 +12,19 @@ interface PageProps {
 
 const EditPage = async ({ params }: PageProps) => {
   const id = params.id;
-  const campaignSession = await get(id);
+  const campaignSession = await api.campaignSessions.get({ id: params.id });
+  if (!campaignSession) {
+    return notFound();
+  }
 
-  async function editAction(data: CampaignSessionFormValues): Promise<string> {
-    "use server";
-    await edit(id, data);
-    return id;
+  const submitAction = async (data: FieldValues) => {
+    "use server"
+    await edit(id, data)
   }
 
   async function deleteAction(id: string) {
     "use server";
-    await deletecampaignSession(id);
-    redirect(`/${params.campaignId}/campaignsessions`);
-  }
-
-  if (!campaignSession) {
-    return notFound();
+    await deleteCampaignSession(params.campaignId, id);
   }
   return (
     <>
@@ -35,7 +33,7 @@ const EditPage = async ({ params }: PageProps) => {
           <CampaignSessionForm
             data={campaignSession}
             campaignId={campaignSession.campaignId}
-            submitAction={editAction}
+            submitAction={submitAction}
             deleteAction={deleteAction}
           />
         </>

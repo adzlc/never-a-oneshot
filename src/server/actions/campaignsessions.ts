@@ -1,93 +1,38 @@
 "use server";
 
-import { CampaignSession, CampaignSessionFormValues } from "~/data/typings";
-import { getServerAuthSession } from "../auth";
-import { db } from "~/server/db";
+import { CampaignSessionInput } from "~/data/typings";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { api } from "~/trpc/server";
+import { FieldValues } from "react-hook-form";
 
-export async function list(campaignId: string) {
-  const session = await getServerAuthSession();
-  if (session?.user == null) {
-    return;
-  }
-  return await db.campaignSession.findMany({
-    where: {
-      campaignId: campaignId,
-    },
-    orderBy: {
-      sessionDate: 'asc'
-    }
+/**
+ * Server actions for CampaignItem.
+ * Must only contain mutations.
+ */
+
+export async function deleteCampaignSession(campaignId: string, id: string) {
+  await api.campaignSessions.delete({ id });
+  revalidatePath(`/${campaignId}/campaignsessions`);
+  redirect(`/${campaignId}/campaignsessions`);
+}
+
+export async function create(campaignId: string, values: FieldValues) {
+  const input = CampaignSessionInput.parse({
+    campaignId: campaignId,
+    ...values,
   });
+  await api.campaignSessions.create(input);
+  revalidatePath('/');
 }
 
-export async function get(id: string) {
-  const session = await getServerAuthSession();
-  if (session?.user == null) {
-    return;
-  }
-  if (id == null || id == "") {
-    return null;
-  }
-  return await db.campaignSession.findUnique({
-    where: {
-      id: id
-    },
+export async function edit(id: string, data: FieldValues) {
+  const input = CampaignSessionInput.parse({
+    id: id,
+    ...data,
   });
+  const response = await api.campaignSessions.edit(input);
+  revalidatePath('/');
+  redirect(`/${response.campaignId}/campaignsessions`);
 }
 
-
-export async function create(campaignId: string, values: CampaignSessionFormValues) {
-  const cs = values as CampaignSession;
-  cs.campaignId = campaignId;
-  const session = await getServerAuthSession();
-  if (session?.user == null) {
-    return;
-  }
-  try {
-    const response = await db.campaignSession.create({
-      data: cs,
-    });
-    revalidatePath(`/`);
-    return response.id;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-}
-
-export async function edit(id: string, data: CampaignSessionFormValues) {
-  const session = await getServerAuthSession();
-  if (session?.user == null) {
-    return;
-  }
-  try {
-    const response = await db.campaignSession.update({
-      where: {
-        id: id,
-      },
-      data: data,
-    });
-    revalidatePath(`/${response.campaignId}/campaignsessions`);
-    return response.id;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-}
-
-export async function deletecampaignSession(id: string) {
-  const session = await getServerAuthSession();
-  if (session?.user == null) {
-    return;
-  }
-  try {
-    const response = await db.campaignSession.delete({
-      where: {
-        id: id,
-      },
-    });
-    return { response };
-  } catch (e) {
-    console.log(e);
-  }
-}
