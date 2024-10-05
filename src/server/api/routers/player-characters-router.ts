@@ -6,8 +6,6 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 
-
-
 export const playerCharactersRouter = createTRPCRouter({
   get: protectedProcedure.input(z.string())
     .query(({ ctx, input }) => {

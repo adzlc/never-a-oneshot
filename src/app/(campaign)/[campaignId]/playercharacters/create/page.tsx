@@ -13,7 +13,6 @@ const PlayerCharacterPage = async ({ params }: PageProps) => {
 
     const submitAction = async (data: FieldValues) => {
         "use server"
-        console.log("Hello", campaignId, data);
         await create(campaignId, data);
         // For some reason the redirect must be done here for create, otherwise it throws an error.
         redirect(`/${campaignId}/playercharacters`);

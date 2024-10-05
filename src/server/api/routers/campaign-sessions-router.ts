@@ -15,7 +15,6 @@ export const campaignSessionsRouter = createTRPCRouter({
     }),
   list: protectedProcedure.input(z.object({ campaignId: z.string() }))
     .query(({ ctx, input }) => {
-      console.log("Retrieving list of campaign items")
       return ctx.db.campaignSession.findMany({
         where: { campaignId: input.campaignId },
       });
