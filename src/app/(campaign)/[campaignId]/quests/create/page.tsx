@@ -1,6 +1,6 @@
 import QuestForm from "~/app/_components/quest/quest-form";
-import { create } from "~/server/actions/quests";
-import { list as listQuestGivers } from "~/server/actions/npcs";
+import { create } from "~/server/actions/quest-actions";
+import { list as listQuestGivers } from "~/server/actions/npc-actions";
 import { FieldValues } from "react-hook-form";
 import { redirect } from "next/navigation";
 interface PageProps {

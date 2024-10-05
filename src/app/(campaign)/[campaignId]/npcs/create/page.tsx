@@ -1,6 +1,6 @@
 import NpcForm from "~/app/_components/npc/npc-form";
 import { NpcFormValues } from "~/data/typings";
-import { create } from "~/server/actions/npcs";
+import { create } from "~/server/actions/npc-actions";
 interface PageProps {
     params: {
         campaignId: string;

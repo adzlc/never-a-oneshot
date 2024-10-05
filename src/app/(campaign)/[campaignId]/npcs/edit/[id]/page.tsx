@@ -1,5 +1,5 @@
 import { NpcFormValues } from "~/data/typings";
-import { deleteNpc, edit, get } from "~/server/actions/npcs";
+import { deleteNpc, edit, get } from "~/server/actions/npc-actions";
 import { notFound, redirect } from "next/navigation";
 import NpcForm from "~/app/_components/npc/npc-form";
 import { toast } from "~/hooks/use-toast";

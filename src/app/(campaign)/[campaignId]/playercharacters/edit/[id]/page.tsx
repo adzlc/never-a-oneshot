@@ -1,5 +1,5 @@
 import { PlayerCharacterFormValues } from "~/data/typings";
-import { deletePlayerCharacter, edit, get } from "~/server/actions/playercharacters";
+import { deletePlayerCharacter, edit, get } from "~/server/actions/player-character-actions";
 import PlayerCharacterForm from "@/appcomponents/playercharacter/playerchracter-form";
 import { notFound, redirect } from "next/navigation";
 interface PageProps {

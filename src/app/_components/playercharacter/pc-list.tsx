@@ -1,4 +1,4 @@
-import { list } from "~/server/actions/playercharacters";
+import { list } from "~/server/actions/player-character-actions";
 import PlayerCharacterCard from "./playercharacter-card";
 
 const PlayerCharacterList = async ({ campaignId }: { campaignId: string }) => {

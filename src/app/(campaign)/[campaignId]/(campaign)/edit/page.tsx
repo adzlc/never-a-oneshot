@@ -2,7 +2,7 @@ import {
   deleteCampaign,
   editCampaign,
   get,
-} from "~/server/actions/campaigns";
+} from "~/server/actions/campaign-actions";
 import CampaignForm from "@/appcomponents/campaign/campaign-form";
 import { redirect } from "next/navigation";
 import { type CampaignFormValues } from "~/data/typings";

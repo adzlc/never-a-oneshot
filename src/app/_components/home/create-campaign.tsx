@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { create, list } from "~/server/actions/campaigns";
+import { create, list } from "~/server/actions/campaign-actions";
 import CampaignForm from "@/appcomponents/campaign/campaign-form";
 import { CampaignFormValues } from "~/data/typings";
 

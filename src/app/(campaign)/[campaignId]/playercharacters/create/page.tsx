@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import PlayerCharacterForm from "~/app/_components/playercharacter/playerchracter-form";
 import { PlayerCharacterFormValues } from "~/data/typings";
-import { create } from "~/server/actions/playercharacters";
+import { create } from "~/server/actions/player-character-actions";
 interface PageProps {
     params: {
         campaignId: string;

@@ -1,5 +1,5 @@
 import NpcCard from "~/app/_components/npc/npc-card";
-import { list } from "~/server/actions/npcs";
+import { list } from "~/server/actions/npc-actions";
 
 const NpcList = async ({ campaignId }: { campaignId: string }) => {
   const data = await list(campaignId);

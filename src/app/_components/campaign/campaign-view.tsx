@@ -1,4 +1,4 @@
-import { get } from "~/server/actions/campaigns";
+import { get } from "~/server/actions/campaign-actions";
 import CampaignCard from "./campaign-card";
 
 const CampaignView = async ({

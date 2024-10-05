@@ -1,6 +1,6 @@
 import LocationForm from "~/app/_components/location/location-form";
 import { LocationFormValues } from "~/data/typings";
-import { create } from "~/server/actions/locations";
+import { create } from "~/server/actions/location-actions";
 interface PageProps {
     params: {
         campaignId: string;

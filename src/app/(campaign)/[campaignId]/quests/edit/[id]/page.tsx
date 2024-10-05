@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { deleteQuest, edit } from "~/server/actions/quests";
-import { list as listQuestGivers } from "~/server/actions/npcs";
+import { deleteQuest, edit } from "~/server/actions/quest-actions";
+import { list as listQuestGivers } from "~/server/actions/npc-actions";
 import QuestForm from "~/app/_components/quest/quest-form";
 import { FieldValues } from "react-hook-form";
 import { api } from "~/trpc/server";

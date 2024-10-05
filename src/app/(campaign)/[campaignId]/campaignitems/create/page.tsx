@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import CampaignItemForm from "~/app/_components/campaignitem/campaignitem-form";
-import { create } from "~/server/actions/campaignitems";
+import { create } from "~/server/actions/campaign-item-actions";
 interface PageProps {
     params: {
         campaignId: string;

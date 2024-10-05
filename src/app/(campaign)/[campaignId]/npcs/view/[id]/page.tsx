@@ -1,5 +1,5 @@
 
-import { get } from "~/server/actions/npcs";
+import { get } from "~/server/actions/npc-actions";
 import NpcView from "~/app/_components/npc/npc-view";
 import { notFound } from "next/navigation";
 interface PageProps {

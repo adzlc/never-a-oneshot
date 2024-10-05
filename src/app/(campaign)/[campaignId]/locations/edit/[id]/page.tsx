@@ -1,6 +1,6 @@
 import { LocationFormValues } from "~/data/typings";
 import { notFound, redirect } from "next/navigation";
-import { deleteLocation, edit, get } from "~/server/actions/locations";
+import { deleteLocation, edit, get } from "~/server/actions/location-actions";
 import LocationForm from "~/app/_components/location/location-form";
 interface PageProps {
   params: {

@@ -1,4 +1,4 @@
-import { deleteCampaignSession, edit } from "~/server/actions/campaignsessions";
+import { deleteCampaignSession, edit } from "~/server/actions/campaign-session-actions";
 import { notFound } from "next/navigation";
 import CampaignSessionForm from "~/app/_components/campaignsession/campaignsession-form";
 import { api } from "~/trpc/server";

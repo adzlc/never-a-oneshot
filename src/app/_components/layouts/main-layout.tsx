@@ -2,7 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import { MainNav } from "~/app/_components/layouts/main-nav";
-import { get } from "~/server/actions/campaigns";
+import { get } from "~/server/actions/campaign-actions";
 import { getServerAuthSession } from "~/server/auth";
 import { UserAccountNav } from "./user-account-nav";
 
