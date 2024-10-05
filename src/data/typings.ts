@@ -61,6 +61,7 @@ export const PlayerCharacterInput = z.object({
 export type PlayerCharacterFormValues = z.infer<typeof PlayerCharacterInput>;
 
 export const NpcInput = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, {
     message: "Name is required.",
   }),

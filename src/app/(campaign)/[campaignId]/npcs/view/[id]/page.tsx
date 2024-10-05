@@ -1,7 +1,7 @@
 
-import { get } from "~/server/actions/npc-actions";
 import NpcView from "~/app/_components/npc/npc-view";
 import { notFound } from "next/navigation";
+import { api } from "~/trpc/server";
 interface PageProps {
   params: {
     id: string;
@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 const EditPage = async ({ params }: PageProps) => {
-  const npc = await get(params.id);
+  const npc = await api.npcs.get(params.id);
 
   if (!npc) {
     return notFound();

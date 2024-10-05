@@ -1,5 +1,6 @@
+import { redirect } from "next/navigation";
+import { FieldValues } from "react-hook-form";
 import NpcForm from "~/app/_components/npc/npc-form";
-import { NpcFormValues } from "~/data/typings";
 import { create } from "~/server/actions/npc-actions";
 interface PageProps {
     params: {
@@ -10,13 +11,15 @@ interface PageProps {
 const NpcPage = async ({ params }: PageProps) => {
     const campaignId = params.campaignId;
 
-    async function createAction(data: NpcFormValues) {
-        "use server";
-        return await create(campaignId, data);
+    const submitAction = async (data: FieldValues) => {
+        "use server"
+        await create(campaignId, data);
+        // For some reason the redirect must be done here for create, otherwise it throws an error.
+        redirect(`/${campaignId}/npcs`);
     }
     return (
         <>
-            <NpcForm campaignId={campaignId} submitAction={createAction} />
+            <NpcForm campaignId={campaignId} submitAction={submitAction} />
         </>
     );
 };

@@ -1,20 +1,19 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ALLEGIANCES, CLASSES, Npc, NpcFormValues, NpcInput } from "~/data/typings";
 import DemoContainer from "@/components/ui/demo-container";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import DeleteDialog from "./delete-dialog";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import RichEditor from "~/components/ui/rich-text/rich-editor";
+import { toast } from "~/hooks/use-toast";
 
 const NpcForm = ({
   campaignId,
@@ -22,10 +21,10 @@ const NpcForm = ({
   submitAction,
   deleteAction
 }: {
-  campaignId: string, data?: Npc | null | undefined, submitAction: (data: NpcFormValues) => Promise<string>,
+  campaignId: string, data?: Npc | null | undefined, submitAction: (data: FieldValues) => Promise<void>,
   deleteAction?: (id: string) => Promise<void>;
 }) => {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const defaultValues: Partial<NpcFormValues> = {
     name: data?.name ?? "",
     race: data?.race ?? "",
@@ -40,12 +39,25 @@ const NpcForm = ({
     resolver: zodResolver(NpcInput),
     defaultValues,
   });
-  async function onSubmit(data: NpcFormValues) {
+  function onSubmit(data: FieldValues) {
     if (imageUrl !== undefined && imageUrl !== "") {
       data.imageUrl = imageUrl;
     }
-    const id = await submitAction(data);
-    router.push(`/${campaignId}/npcs`)
+    startTransition(async () => {
+      try {
+        await submitAction(data);
+        toast({
+          title: "Success",
+          description: "Successfully saved npc",
+        })
+      } catch (err) {
+        toast({
+          title: "Error",
+          description: "Failed to save npc",
+          variant: "destructive",
+        })
+      }
+    });
   }
 
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -200,7 +212,7 @@ const NpcForm = ({
                         />
                       </div>
                     )}
-                    <Button type="submit">Save</Button>
+                    <Button disabled={isPending} type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
                   </div>
                 </CardContent>
               </Card>

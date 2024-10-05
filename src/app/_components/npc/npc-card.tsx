@@ -8,8 +8,7 @@ import RingContent from "~/app/_components/ui/ring-content";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import RichViewer from "~/components/ui/rich-text/rich-viewer";
 
-const NpcCard = async ({ npc }: { npc: Npc }) => {
-
+const NpcCard = ({ npc }: { npc: Npc }) => {
   return (
     <>
       <div className="p-4 max-w-sm">
@@ -39,7 +38,7 @@ const NpcCard = async ({ npc }: { npc: Npc }) => {
               }
             </CardHeader>
             <CardContent>
-              <p className="max-w-full overflow-hidden line-clamp-8"><RichViewer key={npc.id} content={npc.description ?? ""} /></p>
+              <div className="max-w-full overflow-hidden line-clamp-8"><RichViewer key={npc.id} content={npc.description ?? ""} /></div>
             </CardContent>
           </Card>
         </Link>

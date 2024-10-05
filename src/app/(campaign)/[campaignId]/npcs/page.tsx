@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import NpcList from "./npc-list";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import NpcList from "~/app/_components/npc/npc-list";
 
 interface PageProps {
   params: {
@@ -13,7 +13,6 @@ interface PageProps {
 const PlayerCharacterListPage = async ({ params }: PageProps) => {
   return (
     <>
-
       <div className="mt-4 w-full">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
