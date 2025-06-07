@@ -31,3 +31,8 @@ export async function edit(id: string, data: FieldValues) {
   revalidatePath('/');
   redirect(`/${response.campaignId}/npcs`);
 }
+
+export async function list(id: string) {
+  const response = await api.npcs.list(id);
+  return response;
+}
